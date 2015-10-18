@@ -43,16 +43,23 @@
       this.game.pickle = this;
 
       // Register states
-      this.game.state.add("menu", pickleJumper.states.menu);
+      this.game.state.add("menu", pickleJumper.states.Menu);
+      this.game.state.add("game", pickleJumper.states.Game);
 
       // Start with menu
       this.game.state.start("menu");
+
+      // Debug
+      if (this.options.debug && this.game.camera) {
+        this.game.debug.cameraInfo(this.game.camera, 10, 10);
+      }
     }
   });
 
   // Create app
   var p = new Pickle({
-    el: "#pickle-jumper"
+    el: "#pickle-jumper",
+    debug: true
   });
   p.start();
 })();

@@ -1,0 +1,30 @@
+{"frames": {
+
+"block-rectangle.png":
+{
+	"frame": {"x":129,"y":2,"w":128,"h":71},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":29,"w":128,"h":71},
+	"sourceSize": {"w":128,"h":128},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"main-pickle.gif":
+{
+	"frame": {"x":2,"y":2,"w":125,"h":111},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":125,"h":111},
+	"sourceSize": {"w":125,"h":111},
+	"pivot": {"x":0.5,"y":0.5}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "pickle-jumper-sprites.png",
+	"format": "RGBA8888",
+	"size": {"w":259,"h":115},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b2bf6c8ca94194b7d87446f307a40ae2:af19597e3f968620a71d7fbb5bec3171:2de23c24625ce3f23dc3e5935f776494$"
+}
+}
