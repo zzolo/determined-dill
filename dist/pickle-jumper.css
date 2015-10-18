@@ -1,0 +1,19 @@
+/**
+ * pickle-jumper - Pickle Jumper!
+ * @version v0.0.1
+ * @link https://github.com/zzolo/pickle-jumper#readme
+ * @license MIT
+ */
+/**
+ * Main LESS for Pickle Jumper
+ */
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #000000;
+}
+.pickle-jumper-container {
+  width: 800px;
+  max-width: 100%;
+  margin: 0 auto;
+}

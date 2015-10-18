@@ -1,0 +1,21 @@
+{
+  "name": "pickle-jumper",
+  "version": "0.0.1",
+  "homepage": "https://github.com/zzolo/pickle-jumper",
+  "authors": [
+    "Alan Palazzolo <github@zzolo.org>"
+  ],
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "phaser": "~2.4.4",
+    "underscore": "~1.8.3"
+  }
+}
