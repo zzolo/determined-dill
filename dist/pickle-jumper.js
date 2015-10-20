@@ -44,10 +44,10 @@
 
       // Register states
       this.game.state.add("menu", pickleJumper.states.Menu);
-      this.game.state.add("game", pickleJumper.states.Game);
+      this.game.state.add("play", pickleJumper.states.Play);
 
       // Start with menu
-      this.game.state.start("menu");
+      this.game.state.start("play");
 
       // Debug
       if (this.options.debug && this.game.camera) {

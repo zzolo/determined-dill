@@ -7,7 +7,7 @@
 /* global _:false, Phaser:false */
 
 /**
- * Game state for Pickle Jumper
+ * Play state for Pickle Jumper
  */
 
 "use strict";
@@ -18,16 +18,16 @@
   pj.states = pj.states || {};
 
   // Constructor for menu
-  pj.states.Game = function () {
+  pj.states.Play = function () {
     Phaser.State.call(this);
   };
 
   // Extend from State
-  pj.states.Game.prototype = Object.create(Phaser.State.prototype);
-  pj.states.Game.prototype.constructor = pj.states.Game;
+  pj.states.Play.prototype = Object.create(Phaser.State.prototype);
+  pj.states.Play.prototype.constructor = pj.states.Game;
 
   // Add methods
-  _.extend(pj.states.Game.prototype, Phaser.State.prototype, {
+  _.extend(pj.states.Play.prototype, Phaser.State.prototype, {
     // Preload
     preload: function preload() {
       // Load up game images

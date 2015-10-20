@@ -36,9 +36,9 @@
         <key>dpi</key>
         <uint>72</uint>
         <key>dataFormat</key>
-        <string>json-array</string>
+        <string>json</string>
         <key>textureFileName</key>
-        <filename></filename>
+        <filename>pickle-jumper-sprites.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -100,7 +100,7 @@
             <int>-1</int>
         </QSize>
         <key>reduceBorderArtifacts</key>
-        <false/>
+        <true/>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
             <key>algorithm</key>
@@ -147,7 +147,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename></filename>
+                <filename>pickle-jumper-sprites.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -186,12 +186,17 @@
             <key>heuristicMask</key>
             <false/>
             <key>pivotPoint</key>
-            <enum type="SpriteSettings::PivotPoint">Center</enum>
+            <enum type="SpriteSettings::PivotPoint">TopLeft</enum>
         </struct>
         <key>fileList</key>
         <array>
             <filename>main-pickle.gif</filename>
-            <filename>block-rectangle.png</filename>
+            <filename>pixel_1.png</filename>
+            <filename>pixel_black_10.png</filename>
+            <filename>pixel_blue_10.png</filename>
+            <filename>pixel_green_10.png</filename>
+            <filename>pixel_purple_10.png</filename>
+            <filename>pixel_red_10.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

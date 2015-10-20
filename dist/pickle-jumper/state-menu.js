@@ -70,7 +70,7 @@
 
     // When starting
     onStart: function onStart() {
-      this.game.state.start("game");
+      this.game.state.start("play");
     },
 
     // Update

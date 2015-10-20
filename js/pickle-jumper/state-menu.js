@@ -69,7 +69,7 @@
 
     // When starting
     onStart: function() {
-      this.game.state.start("game");
+      this.game.state.start("play");
     },
 
     // Update
