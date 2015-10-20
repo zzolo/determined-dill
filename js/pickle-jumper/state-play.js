@@ -34,6 +34,10 @@
       // Config for difficulty
       this.platformSpaceY = 110;
       this.platformGapMax = 200;
+      this.coinChance = 0.5;
+
+      // Scoring
+      this.scoreCoin = 100;
 
       // Scaling
       this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -54,6 +58,9 @@
       this.startY = this.game.height - 50;
       this.hero = new pj.prefabs.Hero(this.game, this.game.width * 0.5, this.startY - 50);
       this.game.add.existing(this.hero);
+
+      // Containers
+      this.coins = this.game.add.group();
 
       // Platforms
       this.addPlatforms();
@@ -89,8 +96,14 @@
         (this.cursors.left.isDown) ? -(this.game.physics.arcade.gravity.y / 5) :
         (this.cursors.right.isDown) ? (this.game.physics.arcade.gravity.y / 5) : 0;
 
-      // Handle collisions
+      // Platform collisions
       this.game.physics.arcade.collide(this.hero, this.platforms);
+
+      // Coin collisions
+      this.game.physics.arcade.overlap(this.hero, this.coins, function(hero, coin) {
+        coin.kill();
+        this.updateScore(this.scoreCoin);
+      }, null, this);
 
       // For each platform, find out which is the highest
       // if one goes below the camera view, then create a new
@@ -153,13 +166,33 @@
 
       // Place
       platform.reset(x, y);
+
+      // Add some fluff
+      this.fluffPlatform(platform);
+    },
+
+    // Add possible fluff to platform
+    fluffPlatform(platform) {
+      // Add coin
+      if (Math.random() <= this.coinChance) {
+        this.addCoin(platform.x, platform.y - platform.height / 2 - 30);
+      }
+    },
+
+    // Add coin
+    addCoin: function(x, y) {
+      var coin = this.coins.getFirstDead();
+      coin = coin || new pj.prefabs.Coin(this.game, x, y);
+      coin.reset(x, y);
+      this.coins.add(coin);
     },
 
     // Update score.  Score is the score without how far they have gone up.
-    updateScore: function() {
+    updateScore: function(addition) {
+      addition = addition || 0;
       this.scoreUp = (-this.cameraYMin >= 9999999) ? 0 :
         Math.min(Math.max(0, -this.cameraYMin), 9999999 - 1);
-      this.scoreCollect = this.scoreCollect || 0;
+      this.scoreCollect = (this.scoreCollect || 0) + addition;
       this.score = Math.round(this.scoreUp + this.scoreCollect);
 
       // Score text
@@ -179,6 +212,16 @@
       else {
         this.scoreText.text = "Score: " + this.score;
       }
+    },
+
+    // General touching
+    isTouching: function(body) {
+      if (body && body.touch) {
+        return (body.touching.up || body.touching.down ||
+          body.touching.left || body.touching.right);
+      }
+
+      return false;
     }
   });
 })();
