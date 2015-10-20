@@ -58,6 +58,9 @@
       // Platforms
       this.addPlatforms();
 
+      // Initialize score
+      this.updateScore();
+
       // Cursors, input
       this.cursors = this.game.input.keyboard.createCursorKeys();
       this.actionButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -104,6 +107,9 @@
           this.placePlatform(this.platforms.getFirstDead(), this.platforms.getTop());
         }
       }, this);
+
+      // Update score
+      this.updateScore();
     },
 
     // Game over
@@ -149,25 +155,30 @@
       platform.reset(x, y);
     },
 
-    // Update score
-    updateScore: function(change) {
-      this.score = this.score || 0;
-      this.score = this.score + change;
+    // Update score.  Score is the score without how far they have gone up.
+    updateScore: function() {
+      this.scoreUp = (-this.cameraYMin >= 9999999) ? 0 :
+        Math.min(Math.max(0, -this.cameraYMin), 9999999 - 1);
+      this.scoreCollect = this.scoreCollect || 0;
+      this.score = Math.round(this.scoreUp + this.scoreCollect);
 
       // Score text
       if (!this.scoreText) {
         this.scoreText = this.game.add.text(
-          this.game.world.width * 0.5,
-          20,
+          10,
+          this.game.height - 10,
           "Score: " + this.score, {
             font: "bold " + (this.game.world.height / 25) + "px Arial",
             fill: "#fff",
             align: "center",
           });
-        this.scoreText.anchor.set(0.5);
+        this.scoreText.anchor.set(0, 1);
+        this.scoreText.fixedToCamera = true;
+        this.scoreText.cameraOffset.setTo(10, this.game.height - 10);
       }
-
-      // TODO: Update text
+      else {
+        this.scoreText.text = "Score: " + this.score;
+      }
     }
   });
 })();
