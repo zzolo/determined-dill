@@ -165,7 +165,10 @@
 
     // Game over
     gameOver: function() {
-      this.game.state.start("play");
+      // Can't seem to find a way to pass the score
+      // via a state change.
+      this.game.pickle.score = this.score;
+      this.game.state.start("gameover");
     },
 
     // Add platform pool and create initial one

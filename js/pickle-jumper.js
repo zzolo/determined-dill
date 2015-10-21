@@ -41,6 +41,7 @@
       // Register states
       this.game.state.add("menu", pickleJumper.states.Menu);
       this.game.state.add("play", pickleJumper.states.Play);
+      this.game.state.add("gameover", pickleJumper.states.Gameover);
 
       // Highscore
       this.highscoreLimit = 10;
@@ -57,10 +58,11 @@
 
     // Get high scores
     getHighscores: function() {
-      var s = localStorage.getItem("highscores");
+      var s = window.localStorage.getItem("highscores");
       s = (s) ? JSON.parse(s) : [];
       this.highscores = s;
       this.sortHighScores();
+      console.log(this.highscores);
       return this.highscores;
     },
 
@@ -73,11 +75,19 @@
     setHighscore: function(score, name) {
       if (this.isHighscore(score)) {
         this.sortHighScores();
-        this.highscores.shift();
+
+        // Remove lowest one if needed
+        if (this.highscores.length >= this.highscoreLimit) {
+          this.highscores.shift();
+        }
+
+        // Add new score
         this.highscores.push({
           name: name,
           score: score
         });
+
+        // Sort and set
         this.sortHighScores();
         this.setHighScores();
       }
@@ -97,13 +107,13 @@
 
     // Check if score is highest score
     isHighestScore: function(score) {
-      var max = _.max(this.highscores, "score").score;
+      var max = _.max(this.highscores, "score").score || 0;
       return (score > max);
     },
 
     // Set highscores
     setHighScores: function() {
-      localStorage.setItem("highscore", JSON.stringify(this.highscores));
+      window.localStorage.setItem("highscores", JSON.stringify(this.highscores));
     }
   });
 
