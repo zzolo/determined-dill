@@ -35,9 +35,11 @@
       this.platformSpaceY = 110;
       this.platformGapMax = 200;
       this.coinChance = 0.5;
+      this.boostChance = 0.3;
 
       // Scoring
       this.scoreCoin = 100;
+      this.scoreBoost = 300;
 
       // Scaling
       this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -55,12 +57,13 @@
       this.game.physics.arcade.gravity.y = 1000;
 
       // Determine where first platform and hero will be
-      this.startY = this.game.height - 50;
+      this.startY = this.game.height - 5;
       this.hero = new pj.prefabs.Hero(this.game, this.game.width * 0.5, this.startY - 50);
       this.game.add.existing(this.hero);
 
       // Containers
       this.coins = this.game.add.group();
+      this.boosts = this.game.add.group();
 
       // Platforms
       this.addPlatforms();
@@ -97,12 +100,21 @@
         (this.cursors.right.isDown) ? (this.game.physics.arcade.gravity.y / 5) : 0;
 
       // Platform collisions
-      this.game.physics.arcade.collide(this.hero, this.platforms);
+      this.game.physics.arcade.collide(this.hero, this.platforms, function(hero) {
+        hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 0.7;
+      }, null, this);
 
       // Coin collisions
       this.game.physics.arcade.overlap(this.hero, this.coins, function(hero, coin) {
         coin.kill();
         this.updateScore(this.scoreCoin);
+      }, null, this);
+
+      // Boosts collisions
+      this.game.physics.arcade.overlap(this.hero, this.boosts, function(hero, boost) {
+        boost.kill();
+        this.updateScore(this.scoreBoost);
+        hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 1.5;
       }, null, this);
 
       // For each platform, find out which is the highest
@@ -121,6 +133,16 @@
         }
       }, this);
 
+      // Remove any fluff
+      ["coins", "boosts"].forEach(_.bind(function(pool) {
+        this[pool].forEachAlive(function(p) {
+          // Check if this one is of the screen
+          if (p.y > this.camera.y + this.game.height) {
+            p.kill();
+          }
+        }, this);
+      }, this));
+
       // Update score
       this.updateScore();
     },
@@ -135,7 +157,7 @@
       this.platforms = this.game.add.group();
 
       // Add first platform
-      var first = new pj.prefabs.Platform(this.game, this.game.width * 0.5, this.startY);
+      var first = new pj.prefabs.Platform(this.game, this.game.width * 0.5, this.startY, this.game.width * 2);
       this.platforms.add(first);
 
       // Add new platforms
@@ -166,25 +188,32 @@
 
       // Place
       platform.reset(x, y);
+      platform.resetWidth();
 
       // Add some fluff
       this.fluffPlatform(platform);
     },
 
     // Add possible fluff to platform
-    fluffPlatform(platform) {
+    fluffPlatform: function(platform) {
+      var x = platform.x;
+      var y = platform.y - platform.height / 2 - 30;
+
       // Add coin
       if (Math.random() <= this.coinChance) {
-        this.addCoin(platform.x, platform.y - platform.height / 2 - 30);
+        this.addWithPool(this.coins, "Coin", x, y);
+      }
+      else if (Math.random() <= this.boostChance) {
+        this.addWithPool(this.boosts, "Boost", x, y);
       }
     },
 
-    // Add coin
-    addCoin: function(x, y) {
-      var coin = this.coins.getFirstDead();
-      coin = coin || new pj.prefabs.Coin(this.game, x, y);
-      coin.reset(x, y);
-      this.coins.add(coin);
+    // Generic add with pooling functionallity
+    addWithPool: function(pool, prefab, x, y) {
+      var o = pool.getFirstDead();
+      o = o || new pj.prefabs[prefab](this.game, x, y);
+      o.reset(x, y);
+      pool.add(o);
     },
 
     // Update score.  Score is the score without how far they have gone up.

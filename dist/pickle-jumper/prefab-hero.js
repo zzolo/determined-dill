@@ -45,11 +45,6 @@
   // Add methods
   _.extend(pj.prefabs.Hero.prototype, {
     update: function update() {
-      // Always jump
-      if (this.body.touching.down) {
-        this.body.velocity.y = -700;
-      }
-
       // Track the maximum amount that the hero has travelled
       this.yChange = Math.max(this.yChange, Math.abs(this.y - this.yOrig));
 
