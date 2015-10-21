@@ -39,6 +39,8 @@
       // Set background
       this.game.stage.backgroundColor = "#33CCFF";
 
+      //this.game.time.slowMotion = 0.2;
+
       // Config for difficulty
       this.platformSpaceY = 110;
       this.platformGapMax = 200;
@@ -49,16 +51,15 @@
       this.scoreCoin = 100;
       this.scoreBoost = 300;
 
+      // Initialize tracking variables
+      this.resetViewTracking();
+
       // Scaling
       this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
       this.game.scale.maxWidth = this.game.width;
       this.game.scale.maxHeight = this.game.height;
       this.game.scale.pageAlignHorizontally = true;
       this.game.scale.pageAlignVertically = true;
-
-      // Camera and platform tracking vars
-      this.cameraYMin = 9999999;
-      this.platformYMin = 9999999;
 
       // Physics
       this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -77,6 +78,7 @@
       this.addPlatforms();
 
       // Initialize score
+      this.resetScore();
       this.updateScore();
 
       // Cursors, input
@@ -152,9 +154,23 @@
       this.updateScore();
     },
 
+    // Shutdown
+    shutdown: function shutdown() {
+      // Reset everything, or the world will be messed up
+      this.world.setBounds(0, 0, this.game.width, this.game.height);
+      this.cursor = null;
+      this.resetViewTracking();
+      this.resetScore();
+
+      ["hero", "platforms", "coins", "boosts", "scoreText"].forEach(_.bind(function (item) {
+        this[item].destroy();
+        this[item] = null;
+      }, this));
+    },
+
     // Game over
     gameOver: function gameOver() {
-      console.log("gameover");
+      this.game.state.start("play");
     },
 
     // Add platform pool and create initial one
@@ -240,6 +256,20 @@
       } else {
         this.scoreText.text = "Score: " + this.score;
       }
+    },
+
+    // Reset score
+    resetScore: function resetScore() {
+      this.scoreUp = 0;
+      this.scoreCollect = 0;
+      this.score = 0;
+    },
+
+    // Reset view tracking
+    resetViewTracking: function resetViewTracking() {
+      // Camera and platform tracking vars
+      this.cameraYMin = 9999999;
+      this.platformYMin = 9999999;
     },
 
     // General touching

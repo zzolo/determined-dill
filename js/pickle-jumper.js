@@ -42,6 +42,10 @@
       this.game.state.add("menu", pickleJumper.states.Menu);
       this.game.state.add("play", pickleJumper.states.Play);
 
+      // Highscore
+      this.highscoreLimit = 10;
+      this.getHighscores();
+
       // Start with menu
       this.game.state.start("play");
 
@@ -49,6 +53,57 @@
       if (this.options.debug && this.game.camera) {
         this.game.debug.cameraInfo(this.game.camera, 10, 10);
       }
+    },
+
+    // Get high scores
+    getHighscores: function() {
+      var s = localStorage.getItem("highscores");
+      s = (s) ? JSON.parse(s) : [];
+      this.highscores = s;
+      this.sortHighScores();
+      return this.highscores;
+    },
+
+    // Get highest score
+    getHighscore: function() {
+      return _.max(this.highscores, "score");
+    },
+
+    // Set single highscore
+    setHighscore: function(score, name) {
+      if (this.isHighscore(score)) {
+        this.sortHighScores();
+        this.highscores.shift();
+        this.highscores.push({
+          name: name,
+          score: score
+        });
+        this.sortHighScores();
+        this.setHighScores();
+      }
+    },
+
+    // Sort highscores
+    sortHighScores: function() {
+      this.highscores = _.sortBy(this.highscores, "score");
+    },
+
+    // Is highscore.  Is the score higher than the lowest
+    // recorded score
+    isHighscore: function(score) {
+      var min = _.min(this.highscores, "score").score;
+      return (score > min || this.highscores.length < this.highscoreLimit);
+    },
+
+    // Check if score is highest score
+    isHighestScore: function(score) {
+      var max = _.max(this.highscores, "score").score;
+      return (score > max);
+    },
+
+    // Set highscores
+    setHighScores: function() {
+      localStorage.setItem("highscore", JSON.stringify(this.highscores));
     }
   });
 
