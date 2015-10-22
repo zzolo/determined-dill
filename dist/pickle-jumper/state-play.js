@@ -47,10 +47,12 @@
       this.hoverChance = 0.3;
       this.coinChance = 0.3;
       this.boostChance = 0.3;
+      this.botChance = 0.1;
 
       // Scoring
       this.scoreCoin = 100;
       this.scoreBoost = 300;
+      this.scoreBot = 500;
 
       // Initialize tracking variables
       this.resetViewTracking();
@@ -74,6 +76,7 @@
       // Containers
       this.coins = this.game.add.group();
       this.boosts = this.game.add.group();
+      this.bots = this.game.add.group();
 
       // Platforms
       this.addPlatforms();
@@ -124,6 +127,17 @@
         hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 1.5;
       }, null, this);
 
+      // Botulism collisions.  If herok jumps on top, then kill, otherwise die
+      this.game.physics.arcade.collide(this.hero, this.bots, function (hero, bot) {
+        if (hero.body.touching.down) {
+          bot.kill();
+          this.updateScore(this.scoreBot);
+          hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 0.5;
+        } else {
+          this.gameOver();
+        }
+      }, null, this);
+
       // For each platform, find out which is the highest
       // if one goes below the camera view, then create a new
       // one at a distance from the highest one
@@ -141,7 +155,7 @@
       }, this);
 
       // Remove any fluff
-      ["coins", "boosts"].forEach(_.bind(function (pool) {
+      ["coins", "boosts", "bots"].forEach(_.bind(function (pool) {
         this[pool].forEachAlive(function (p) {
           // Check if this one is of the screen
           if (p.y > this.camera.y + this.game.height) {
@@ -235,6 +249,8 @@
         this.addWithPool(this.coins, "Coin", x, y);
       } else if (Math.random() <= this.boostChance) {
         this.addWithPool(this.boosts, "Boost", x, y);
+      } else if (Math.random() <= this.botChance) {
+        this.addWithPool(this.bots, "Botulism", x, y);
       }
     },
 
@@ -242,7 +258,14 @@
     addWithPool: function addWithPool(pool, prefab, x, y) {
       var o = pool.getFirstDead();
       o = o || new pj.prefabs[prefab](this.game, x, y);
-      o.reset(x, y);
+
+      // Use custom reset if available
+      if (o.resetPlacement) {
+        o.resetPlacement(x, y);
+      } else {
+        o.reset(x, y);
+      }
+
       pool.add(o);
     },
 

@@ -19,11 +19,6 @@
     this.scale.setTo(0.5, 0.5);
     this.game.physics.arcade.enableBody(this);
 
-    // Only allow for collission down
-    this.body.checkCollision.up = false;
-    this.body.checkCollision.left = false;
-    this.body.checkCollision.right = false;
-
     // Track where the hero started and how much the distance
     // has changed from that point
     this.yOrig = this.y;

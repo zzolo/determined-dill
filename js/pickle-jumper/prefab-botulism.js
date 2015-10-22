@@ -1,7 +1,7 @@
 /* global _:false, Phaser:false */
 
 /**
- * Prefab (objects) object for platforms
+ * Prefab for Botulism, the bad dudes
  */
 
 (function() {
@@ -9,40 +9,36 @@
   var pj = window.pickleJumper = window.pickleJumper || {};
   pj.prefabs = pj.prefabs || {};
 
-  // Constructor for main character
-  pj.prefabs.Platform = function(game, x, y, width) {
+  // Constructor
+  pj.prefabs.Botulism = function(game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "game-sprites", "pixel_purple_10.png");
+    Phaser.Sprite.call(this, game, x, y, "game-sprites", "pixel_red_10.png");
 
     // Configure
     this.anchor.setTo(0.5, 0.5);
-    this.scale.x = (width) ? width / 10 : 10;
-    this.scale.y = 2;
-    this.hover = false;
+    this.scale.setTo(2, 2);
+    this.hover = true;
     this.setHoverSpeed(100);
+    this.hoverRange = 100;
 
     // Physics
     this.game.physics.arcade.enableBody(this);
     this.body.allowGravity = false;
     this.body.immovable = true;
 
-    // Only allow for collission up
-    this.body.checkCollision.down = false;
-    this.body.checkCollision.left = false;
-    this.body.checkCollision.right = false;
-
     // Determine anchor x bounds
     this.paddingX = 10;
-    this.getAnchorBoundsX();
+    this.resetPlacement(x, y);
   };
 
   // Extend from Sprite
-  pj.prefabs.Platform.prototype = Object.create(Phaser.Sprite.prototype);
-  pj.prefabs.Platform.prototype.constructor = pj.prefabs.Platform;
+  pj.prefabs.Botulism.prototype = Object.create(Phaser.Sprite.prototype);
+  pj.prefabs.Botulism.prototype.constructor = pj.prefabs.Botulism;
 
   // Add methods
-  _.extend(pj.prefabs.Platform.prototype, {
+  _.extend(pj.prefabs.Botulism.prototype, {
     update: function() {
+      // Do hover
       if (this.hover) {
         this.body.velocity.x = this.body.velocity.x || this.hoverSpeed;
         this.body.velocity.x = (this.x <= this.minX) ? this.hoverSpeed :
@@ -52,22 +48,20 @@
 
     // Set hover speed.  Add a bit of variance
     setHoverSpeed: function(speed) {
-      this.hoverSpeed = speed + this.game.rnd.integerInRange(-50, 50);
+      this.hoverSpeed = speed + this.game.rnd.integerInRange(-25, 25);
     },
 
-    // Get anchor bounds
+    // Get anchor bounds.  This is relative to where the platform is
     getAnchorBoundsX: function() {
-      this.minX = this.paddingX + (this.width / 2);
-      this.maxX = this.game.width - (this.paddingX + (this.width / 2));
+      this.minX = Math.max(this.x - this.hoverRange, this.paddingX + (this.width / 2));
+      this.maxX = Math.min(this.x + this.hoverRange, this.game.width - (this.paddingX + (this.width / 2)));
       return [this.minX, this.maxX];
     },
 
     // Reset things
-    resetSettings: function(width) {
-      this.reset(0, 0);
+    resetPlacement: function(x, y) {
+      this.reset(x, y);
       this.body.velocity.x = 0;
-      this.scale.x = (width) ? width / 10 : 10;
-      this.hover = false;
       this.getAnchorBoundsX();
     }
   });

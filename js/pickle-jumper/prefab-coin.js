@@ -12,7 +12,7 @@
   // Constructor for coin
   pj.prefabs.Coin = function(game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "game-sprites", "pixel_red_10.png");
+    Phaser.Sprite.call(this, game, x, y, "game-sprites", "pixel_blue_10.png");
 
     // Configure
     this.anchor.setTo(0.5, 0.5);
