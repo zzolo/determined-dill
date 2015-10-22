@@ -12,6 +12,9 @@
   // Constructor
   pj.states.Gameover = function() {
     Phaser.State.call(this);
+
+    // Configure
+    this.padding = 10;
   };
 
   // Extend from State
@@ -22,23 +25,20 @@
   _.extend(pj.states.Gameover.prototype, Phaser.State.prototype, {
     // Preload
     preload: function() {
+      this.game.load.image("gameover", "assets/gameover.png");
+      this.game.load.image("play", "assets/title-play.png");
     },
 
     // Create
     create: function() {
       // Set background
-      this.game.stage.backgroundColor = "#52a363";
+      this.game.stage.backgroundColor = "#8cc63f";
 
-      // Title
-      this.titleText = this.game.add.text(
-        this.game.world.width * 0.5,
-        this.game.world.height * 0.1,
-        "Game over", {
-          font: "bold " + (this.game.world.height / 10) + "px Arial",
-          fill: "#fff",
-          align: "center",
-        });
-      this.titleText.anchor.set(0.5);
+      // Place title
+      this.titleImage = this.game.add.sprite(this.game.width / 2, this.padding * 3, "gameover");
+      this.titleImage.anchor.setTo(0.5, 0);
+      this.titleImage.scale.setTo((this.game.width - (this.padding * 8)) / this.titleImage.width);
+      this.game.add.existing(this.titleImage);
 
       // Highscore list.  Can't seem to find a way to pass the score
       // via a state change.
@@ -48,36 +48,31 @@
       }
 
       if (this.game.pickle.isHighestScore(this.score)) {
-        this.highestScore();
+        //this.highestScore();
+        console.log("highest");
       }
 
       this.highscoreList();
 
-      // Re-start
-      this.replayText = this.game.add.text(
-        this.game.world.width * 0.5,
-        this.game.world.height * 0.9,
-        "Restart", {
-          font: "bold " + (this.game.height / 20) + "px Arial",
-          fill: "#fff",
-          align: "center",
-          cursor: "pointer"
-        });
-      this.replayText.anchor.set(0.5);
+      // Place re-play
+      this.replayImage = this.game.add.sprite(this.game.width - this.padding * 2, this.game.height - this.padding * 2, "play");
+      this.replayImage.anchor.setTo(1, 1);
+      this.replayImage.scale.setTo((this.game.width * 0.25) / this.replayImage.width);
+      this.game.add.existing(this.replayImage);
 
       // Add hover for mouse
-      this.replayText.inputEnabled = true;
-      this.replayText.events.onInputOver.add(function() {
-        this.replayText.originalFill = this.replayText.fill;
-        this.replayText.fill = "green";
+      this.replayImage.inputEnabled = true;
+      this.replayImage.events.onInputOver.add(function() {
+        this.replayImage.originalTint = this.replayImage.tint;
+        this.replayImage.tint = 0.5 * 0xFFFFFF;
       }, this);
 
-      this.replayText.events.onInputOut.add(function() {
-        this.replayText.fill = this.replayText.originalFill;
+      this.replayImage.events.onInputOut.add(function() {
+        this.replayImage.tint = this.replayImage.originalTint;
       }, this);
 
       // Add interactions for starting
-      this.replayText.events.onInputDown.add(this.replay, this);
+      this.replayImage.events.onInputDown.add(this.replay, this);
 
       // Input
       this.leftButton = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);

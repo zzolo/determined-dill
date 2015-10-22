@@ -26,7 +26,7 @@
     // Preload
     preload: function() {
       this.game.load.image("title", "assets/title.png");
-    this.game.load.image("play", "assets/title-play.png");
+      this.game.load.image("play", "assets/title-play.png");
     },
 
     // Create

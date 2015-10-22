@@ -58,6 +58,11 @@
       if (this.options.debug && this.game.camera) {
         this.game.debug.cameraInfo(this.game.camera, 10, 10);
       }
+
+      if (this.options.debug) {
+        this.resetHighscores();
+        this.getHighscores();
+      }
     },
 
     // Get high scores
@@ -92,7 +97,7 @@
 
         // Sort and set
         this.sortHighScores();
-        this.setHighScores();
+        this.setHighscores();
       }
     },
 
@@ -115,8 +120,13 @@
     },
 
     // Set highscores
-    setHighScores: function setHighScores() {
+    setHighscores: function setHighscores() {
       window.localStorage.setItem("highscores", JSON.stringify(this.highscores));
+    },
+
+    // Reset highschores
+    resetHighscores: function resetHighscores() {
+      window.localStorage.removeItem("highscores");
     }
   });
 

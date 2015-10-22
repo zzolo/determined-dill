@@ -31,7 +31,7 @@
     // Preload
     preload: function preload() {
       // Load up game images
-      this.game.load.atlas("play-sprites", "/assets/determined-dill-sprites.png", "/assets/determined-dill-sprites.json");
+      this.game.load.atlas("play-sprites", "assets/determined-dill-sprites.png", "assets/determined-dill-sprites.json");
     },
 
     // Create
