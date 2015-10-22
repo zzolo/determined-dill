@@ -20,11 +20,13 @@
   // Constructor
   pj.prefabs.Botulism = function (game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "game-sprites", "pixel_red_10.png");
+    Phaser.Sprite.call(this, game, x, y, "play-sprites", "botchy.png");
+
+    // Size
+    this.anchor.setTo(0.5, 0.5);
+    this.scale.setTo(this.game.width / 10 / this.width);
 
     // Configure
-    this.anchor.setTo(0.5, 0.5);
-    this.scale.setTo(2, 2);
     this.hover = true;
     this.setHoverSpeed(100);
     this.hoverRange = 100;

@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>3.9.4</string>
         <key>fileName</key>
-        <string>/Users/zzolo/Code/personal/pickle-jumper/assets/pickle-jumper-sprites.tps</string>
+        <string>/Users/zzolo/Code/personal/pickle-jumper/assets/determined-dill-sprites.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -28,7 +28,7 @@
             </struct>
         </array>
         <key>allowRotation</key>
-        <true/>
+        <false/>
         <key>premultiplyAlpha</key>
         <false/>
         <key>shapeDebug</key>
@@ -38,7 +38,7 @@
         <key>dataFormat</key>
         <string>json</string>
         <key>textureFileName</key>
-        <filename>pickle-jumper-sprites.png</filename>
+        <filename></filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -100,7 +100,7 @@
             <int>-1</int>
         </QSize>
         <key>reduceBorderArtifacts</key>
-        <true/>
+        <false/>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
             <key>algorithm</key>
@@ -147,7 +147,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>pickle-jumper-sprites.json</filename>
+                <filename>determined-dill-sprites.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -186,17 +186,15 @@
             <key>heuristicMask</key>
             <false/>
             <key>pivotPoint</key>
-            <enum type="SpriteSettings::PivotPoint">TopLeft</enum>
+            <enum type="SpriteSettings::PivotPoint">Center</enum>
         </struct>
         <key>fileList</key>
         <array>
-            <filename>main-pickle.gif</filename>
-            <filename>pixel_1.png</filename>
-            <filename>pixel_black_10.png</filename>
-            <filename>pixel_blue_10.png</filename>
-            <filename>pixel_green_10.png</filename>
-            <filename>pixel_purple_10.png</filename>
-            <filename>pixel_red_10.png</filename>
+            <filename>magicdill.png</filename>
+            <filename>dillybean.png</filename>
+            <filename>../../../../Downloads/theDeterminedDill/guys/pickle.png</filename>
+            <filename>botchy.png</filename>
+            <filename>dill.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

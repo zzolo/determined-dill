@@ -20,11 +20,11 @@
   // Constructor for main character
   pj.prefabs.Hero = function (game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "game-sprites", "main-pickle.gif");
+    Phaser.Sprite.call(this, game, x, y, "play-sprites", "pickle.png");
 
     // Configure
-    this.anchor.setTo(0.5, 0.5);
-    this.scale.setTo(0.5, 0.5);
+    this.anchor.setTo(0.5);
+    this.scale.setTo(this.game.width / 25 / this.width);
     this.game.physics.arcade.enableBody(this);
 
     // Track where the hero started and how much the distance
@@ -45,6 +45,13 @@
 
       // Wrap around edges left/tight edges
       this.game.world.wrap(this, this.width / 2, false, true, false);
+    },
+
+    // Reset placement custom
+    resetPlacement: function resetPlacement(x, y) {
+      this.reset(x, y);
+      this.yOrig = this.y;
+      this.yChange = 0;
     }
   });
 })();

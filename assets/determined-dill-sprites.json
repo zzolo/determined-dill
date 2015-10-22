@@ -1,0 +1,57 @@
+{"frames": {
+
+"botchy.png":
+{
+	"frame": {"x":2,"y":2,"w":620,"h":545},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":620,"h":545},
+	"sourceSize": {"w":620,"h":545},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"dill.png":
+{
+	"frame": {"x":150,"y":626,"w":651,"h":310},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":651,"h":310},
+	"sourceSize": {"w":651,"h":310},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"dillybean.png":
+{
+	"frame": {"x":150,"y":549,"w":400,"h":75},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":75},
+	"sourceSize": {"w":400,"h":75},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"magicdill.png":
+{
+	"frame": {"x":624,"y":2,"w":533,"h":600},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":533,"h":600},
+	"sourceSize": {"w":533,"h":600},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"pickle.png":
+{
+	"frame": {"x":2,"y":549,"w":146,"h":406},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":146,"h":406},
+	"sourceSize": {"w":146,"h":406},
+	"pivot": {"x":0.5,"y":0.5}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "determined-dill-sprites.png",
+	"format": "RGBA8888",
+	"size": {"w":1159,"h":976},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:aa6bb3b9fea34f59dbf18592c3d4c448:875b611288fd57c77492884466e66477:2cd6549ed82766481275ad000b6f7073$"
+}
+}

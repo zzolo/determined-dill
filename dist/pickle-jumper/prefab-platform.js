@@ -18,14 +18,13 @@
   pj.prefabs = pj.prefabs || {};
 
   // Constructor for main character
-  pj.prefabs.Platform = function (game, x, y, width) {
+  pj.prefabs.Platform = function (game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "game-sprites", "pixel_purple_10.png");
+    Phaser.Sprite.call(this, game, x, y, "play-sprites", "dillybean.png");
 
     // Configure
     this.anchor.setTo(0.5, 0.5);
-    this.scale.x = width ? width / 10 : 10;
-    this.scale.y = 2;
+    this.scale.setTo(this.game.width / 5 / this.width);
     this.hover = false;
     this.setHoverSpeed(100);
 
@@ -70,10 +69,9 @@
     },
 
     // Reset things
-    resetSettings: function resetSettings(width) {
+    resetSettings: function resetSettings() {
       this.reset(0, 0);
       this.body.velocity.x = 0;
-      this.scale.x = width ? width / 10 : 10;
       this.hover = false;
       this.getAnchorBoundsX();
     }

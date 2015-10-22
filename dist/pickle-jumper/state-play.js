@@ -31,13 +31,13 @@
     // Preload
     preload: function preload() {
       // Load up game images
-      this.game.load.atlas("game-sprites", "/assets/pickle-jumper-sprites.png", "/assets/pickle-jumper-sprites.json");
+      this.game.load.atlas("play-sprites", "/assets/determined-dill-sprites.png", "/assets/determined-dill-sprites.json");
     },
 
     // Create
     create: function create() {
       // Set background
-      this.game.stage.backgroundColor = "#33CCFF";
+      this.game.stage.backgroundColor = "#b8f4bc";
 
       //this.game.time.slowMotion = 0.2;
 
@@ -70,7 +70,8 @@
 
       // Determine where first platform and hero will be
       this.startY = this.game.height - 5;
-      this.hero = new pj.prefabs.Hero(this.game, this.game.width * 0.5, this.startY - 50);
+      this.hero = new pj.prefabs.Hero(this.game, 0, 0);
+      this.hero.resetPlacement(this.game.width * 0.5, this.startY - this.hero.height);
       this.game.add.existing(this.hero);
 
       // Containers

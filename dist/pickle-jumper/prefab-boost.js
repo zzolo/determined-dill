@@ -20,11 +20,11 @@
   // Constructor for Boost
   pj.prefabs.Boost = function (game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "game-sprites", "pixel_green_10.png");
+    Phaser.Sprite.call(this, game, x, y, "play-sprites", "dill.png");
 
-    // Configure
+    // Size
     this.anchor.setTo(0.5, 0.5);
-    this.scale.setTo(2, 2);
+    this.scale.setTo(this.game.width / 9 / this.width);
 
     // Physics
     this.game.physics.arcade.enableBody(this);
