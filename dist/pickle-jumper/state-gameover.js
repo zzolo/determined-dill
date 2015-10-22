@@ -243,7 +243,6 @@
 
     // Highscore list
     highscoreList: function highscoreList() {
-      console.log(this.game.pickle);
       if (this.game.pickle.highscores.length > 0) {
         console.log(this.game.pickle.highscores);
       }

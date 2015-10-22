@@ -66,7 +66,6 @@
       s = s ? JSON.parse(s) : [];
       this.highscores = s;
       this.sortHighScores();
-      console.log(this.highscores);
       return this.highscores;
     },
 

@@ -44,7 +44,8 @@
       // Config for difficulty
       this.platformSpaceY = 110;
       this.platformGapMax = 200;
-      this.coinChance = 0.5;
+      this.hoverChance = 0.3;
+      this.coinChance = 0.3;
       this.boostChance = 0.3;
 
       // Scoring
@@ -107,9 +108,8 @@
       this.hero.body.velocity.x = this.cursors.left.isDown ? -(this.game.physics.arcade.gravity.y / 5) : this.cursors.right.isDown ? this.game.physics.arcade.gravity.y / 5 : 0;
 
       // Platform collisions
-      this.game.physics.arcade.collide(this.hero, this.platforms, function (hero) {
-        hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 0.7;
-      }, null, this);
+      this.game.physics.arcade.collide(this.hero, this.platforms, this.updateHeroPlatform, null, this);
+      this.game.physics.arcade.collide(this.hero, this.base, this.updateHeroPlatform, null, this);
 
       // Coin collisions
       this.game.physics.arcade.overlap(this.hero, this.coins, function (hero, coin) {
@@ -154,6 +154,11 @@
       this.updateScore();
     },
 
+    // Platform collision
+    updateHeroPlatform: function updateHeroPlatform(hero) {
+      hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 0.7;
+    },
+
     // Shutdown
     shutdown: function shutdown() {
       // Reset everything, or the world will be messed up
@@ -180,11 +185,11 @@
     addPlatforms: function addPlatforms() {
       this.platforms = this.game.add.group();
 
-      // Add first platform
-      var first = new pj.prefabs.Platform(this.game, this.game.width * 0.5, this.startY, this.game.width * 2);
-      this.platforms.add(first);
+      // Add first platform.  TODO: Change to its own prefab, sprite
+      this.base = new pj.prefabs.Platform(this.game, this.game.width * 0.5, this.startY, this.game.width * 2);
+      this.game.add.existing(this.base);
 
-      // Add new platforms
+      // Add some base platforms
       var previous;
       _.each(_.range(20), _.bind(function (i) {
         var p = new pj.prefabs.Platform(this.game, 0, 0);
@@ -196,9 +201,10 @@
 
     // Place platform
     placePlatform: function placePlatform(platform, previousPlatform, overrideY) {
+      platform.resetSettings();
       var y = overrideY || this.platformYMin - this.platformSpaceY;
-      var minX = platform.width / 2 + 10;
-      var maxX = this.world.width - minX;
+      var minX = platform.minX;
+      var maxX = platform.maxX;
 
       // Determine x based on previousPlatform
       var x = this.rnd.integerInRange(minX, maxX);
@@ -212,7 +218,6 @@
 
       // Place
       platform.reset(x, y);
-      platform.resetWidth();
 
       // Add some fluff
       this.fluffPlatform(platform);
@@ -223,8 +228,10 @@
       var x = platform.x;
       var y = platform.y - platform.height / 2 - 30;
 
-      // Add coin
-      if (Math.random() <= this.coinChance) {
+      // Add fluff
+      if (Math.random() <= this.hoverChance) {
+        platform.hover = true;
+      } else if (Math.random() <= this.coinChance) {
         this.addWithPool(this.coins, "Coin", x, y);
       } else if (Math.random() <= this.boostChance) {
         this.addWithPool(this.boosts, "Boost", x, y);
