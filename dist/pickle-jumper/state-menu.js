@@ -20,6 +20,9 @@
   // Constructor for menu
   pj.states.Menu = function () {
     Phaser.State.call(this);
+
+    // Config
+    this.padding = 20;
   };
 
   // Extend from State
@@ -29,47 +32,51 @@
   // Add methods
   _.extend(pj.states.Menu.prototype, Phaser.State.prototype, {
     // Preload
-    preload: function preload() {},
+    preload: function preload() {
+      this.game.load.image("title", "assets/title.png");
+      this.game.load.image("play", "assets/title-play.png");
+    },
 
     // Create
     create: function create() {
       // Set background
-      this.game.stage.backgroundColor = "#52a363";
+      this.game.stage.backgroundColor = "#b8f4bc";
 
-      // Write things
-      this.title = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.1, "Pickle Jumper", {
-        font: "bold " + this.game.world.height / 10 + "px Arial",
-        fill: "#fff",
-        align: "center"
-      });
-      this.title.anchor.set(0.5);
+      // Place title
+      this.titleImage = this.game.add.sprite(this.game.width / 2, this.padding * 3, "title");
+      this.titleImage.anchor.setTo(0.5, 0);
+      this.titleImage.scale.setTo((this.game.width - this.padding * 2) / this.titleImage.width);
+      this.game.add.existing(this.titleImage);
 
-      // Start
-      this.start = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.9, "Start", {
-        font: "bold " + this.game.height / 20 + "px Arial",
-        fill: "#fff",
-        align: "center",
-        cursor: "pointer"
-      });
-      this.start.anchor.set(0.5);
+      // Place play
+      this.playImage = this.game.add.sprite(this.game.width / 2, this.game.height - this.padding * 3, "play");
+      this.playImage.anchor.setTo(0.4, 1);
+      this.playImage.scale.setTo(this.game.width * 0.75 / this.titleImage.width);
+      this.game.add.existing(this.playImage);
 
       // Add hover for mouse
-      this.start.inputEnabled = true;
-      this.start.events.onInputOver.add(function () {
-        this.start.originalFill = this.start.fill;
-        this.start.fill = "green";
+      this.playImage.inputEnabled = true;
+      this.playImage.events.onInputOver.add(function () {
+        this.playImage.originalTint = this.playImage.tint;
+        this.playImage.tint = 0.5 * 0xFFFFFF;
       }, this);
 
-      this.start.events.onInputOut.add(function () {
-        this.start.fill = this.start.originalFill;
+      this.playImage.events.onInputOut.add(function () {
+        this.playImage.tint = this.playImage.originalTint;
       }, this);
 
-      // Add interactions for starting
-      this.start.events.onInputDown.add(this.onStart, this);
+      // Add mouse interaction
+      this.playImage.events.onInputDown.add(this.go, this);
+
+      // Add keyboard interaction
+      this.actionButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+      this.actionButton.onDown.add(function () {
+        this.go();
+      }, this);
     },
 
-    // When starting
-    onStart: function onStart() {
+    // Start playing
+    go: function go() {
       this.game.state.start("play");
     },
 

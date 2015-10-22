@@ -48,7 +48,7 @@
       this.getHighscores();
 
       // Start with menu
-      this.game.state.start("play");
+      this.game.state.start("menu");
 
       // Debug
       if (this.options.debug && this.game.camera) {
