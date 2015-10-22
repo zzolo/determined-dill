@@ -1,10 +1,12 @@
 # Project specific
 !dist
 
+# For easy hosting on Github
+!bower_components/
+
 # General git ignores
 node_modules/
 components/
-bower_components/
 .sass-cache
 .env
 .tmp
