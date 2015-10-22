@@ -114,6 +114,8 @@
       this.actionButton.onDown.add(function () {
         if (this.hInput) {
           this.saveHighscore();
+        } else {
+          this.replay();
         }
       }, this);
     },
