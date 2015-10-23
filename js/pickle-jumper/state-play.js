@@ -300,7 +300,7 @@
         this.scoreText.cameraOffset.setTo(10, this.game.height - 10);
       }
       else {
-        this.scoreText.text = "Score: " + this.score;
+        this.scoreText.text = "Score: " + this.score.toLocaleString();
       }
     },
 

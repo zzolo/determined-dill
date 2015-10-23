@@ -25,6 +25,7 @@
     preload: function() {
       this.game.load.image("gameover", "assets/gameover.png");
       this.game.load.image("play", "assets/title-play.png");
+      this.game.load.image("your-score", "assets/your-score.png");
     },
 
     // Create
@@ -41,16 +42,17 @@
       // Highscore list.  Can't seem to find a way to pass the score
       // via a state change.
       this.score = this.game.pickle.score;
+
+      // Show score
+      this.showScore();
+
+      // Show input if new highscore, otherwise show list
       if (this.game.pickle.isHighscore(this.score)) {
         this.highscoreInput();
       }
-
-      if (this.game.pickle.isHighestScore(this.score)) {
-        //this.highestScore();
-        console.log("highest");
+      else {
+        this.highscoreList();
       }
-
-      this.highscoreList();
 
       // Place re-play
       this.replayImage = this.game.add.sprite(this.game.width - this.padding * 2, this.game.height - this.padding * 2, "play");
@@ -106,6 +108,7 @@
       this.actionButton.onDown.add(function() {
         if (this.hInput) {
           this.saveHighscore();
+          this.highscoreList();
         }
         else {
           this.replay();
@@ -132,17 +135,34 @@
       this.game.state.start("play");
     },
 
-    // Highest score
-    highestScore: function() {
-      this.highestScoreText = this.game.add.text(
-        this.game.world.width * 0.5,
-        this.game.world.height * 0.25,
-        "You got the\nhighest score!!", {
-          font: "bold " + (this.game.world.height / 15) + "px Arial",
-          fill: "#fff",
-          align: "center",
+    // Show highscore
+    showScore: function() {
+      this.scoreGroup = this.game.add.group();
+
+      // Place label
+      this.yourScoreImage = this.game.add.sprite(
+        this.game.width / 2 + (this.padding * 3),
+        this.titleImage.height + (this.padding * 7.5), "your-score");
+      this.yourScoreImage.anchor.setTo(1, 0);
+      this.yourScoreImage.scale.setTo(((this.game.width / 2) - (this.padding * 6)) / this.yourScoreImage.width);
+
+      // Score
+      this.scoreText = new Phaser.Text(
+        this.game,
+        this.game.width / 2 + (this.padding * 5),
+        this.titleImage.height + (this.padding * 6),
+        this.score.toLocaleString(), {
+          font: "bold " + (this.game.world.height / 15) + "px Dosis",
+          fill: "#39b54a",
+          align: "left",
         });
-      this.highestScoreText.anchor.set(0.5);
+      this.scoreText.anchor.setTo(0, 0);
+
+      // Font loading thing
+      _.delay(_.bind(function() {
+        this.scoreGroup.add(this.yourScoreImage);
+        this.scoreGroup.add(this.scoreText);
+      }, this), 1000);
     },
 
     // Make highest score input
@@ -150,14 +170,15 @@
       this.hInput = true;
       this.hInputIndex = 0;
       this.hInputs = this.game.add.group();
+      var y = this.game.world.height * 0.7;
 
       // First input
       var one = new Phaser.Text(
         this.game,
         this.game.world.width * 0.33333,
-        this.game.world.height * 0.5,
+        y,
         "A", {
-          font: "bold " + (this.game.world.height / 15) + "px Arial",
+          font: "bold " + (this.game.world.height / 15) + "px Dosis",
           fill: "#FFFFFF",
           align: "center",
         });
@@ -168,9 +189,9 @@
       var second = new Phaser.Text(
         this.game,
         this.game.world.width * 0.5,
-        this.game.world.height * 0.5,
+        y,
         "A", {
-          font: "bold " + (this.game.world.height / 15) + "px Arial",
+          font: "bold " + (this.game.world.height / 15) + "px Dosis",
           fill: "#FFFFFF",
           align: "center",
         });
@@ -181,9 +202,9 @@
       var third = new Phaser.Text(
         this.game,
         this.game.world.width * 0.66666,
-        this.game.world.height * 0.5,
+        y,
         "A", {
-          font: "bold " + (this.game.world.height / 15) + "px Arial",
+          font: "bold " + (this.game.world.height / 15) + "px Dosis",
           fill: "#FFFFFF",
           align: "center",
         });
@@ -258,8 +279,42 @@
 
     // Highscore list
     highscoreList: function() {
+      this.highscoreLimit = 3;
+      this.highscoreListGroup = this.game.add.group();
+      var fontSize = this.game.world.height / 17.5;
+
       if (this.game.pickle.highscores.length > 0) {
-        console.log(this.game.pickle.highscores);
+        _.each(this.game.pickle.highscores.reverse().slice(0, 3), _.bind(function(h, i) {
+          // Name
+          var name = new Phaser.Text(
+            this.game,
+            this.game.width / 2 + (this.padding * 3),
+            (this.game.height * 0.6) + ((fontSize + this.padding) * i),
+            h.name, {
+              font: "bold " + (this.game.world.height / 15) + "px Dosis",
+              fill: "#b8f4bc",
+              align: "right",
+            });
+          name.anchor.setTo(1, 0);
+
+          // Score
+          var score = new Phaser.Text(
+            this.game,
+            this.game.width / 2 + (this.padding * 5),
+            (this.game.height * 0.6) + ((fontSize + this.padding) * i),
+            h.score.toLocaleString(), {
+              font: "bold " + (this.game.world.height / 15) + "px Dosis",
+              fill: "#39b54a",
+              align: "left",
+            });
+          score.anchor.setTo(0, 0);
+
+          // Font loading thing
+          _.delay(_.bind(function() {
+            this.highscoreListGroup.add(name);
+            this.highscoreListGroup.add(score);
+          }, this), 1000);
+        }, this));
       }
     }
   });

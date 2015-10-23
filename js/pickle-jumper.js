@@ -25,6 +25,9 @@
 
     this.width = this.$el.width();
     this.height = $(window).height();
+
+    // Start
+    this.start();
   };
 
   // Add properties
@@ -131,10 +134,9 @@
   });
 
   // Create app
-  var p = new Pickle({
+  var p;
+  p = new Pickle({
     el: "#pickle-jumper",
-    debug: true
+    debug: false
   });
-  p.start();
-
 })();
