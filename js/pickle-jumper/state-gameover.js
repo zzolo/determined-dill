@@ -106,9 +106,13 @@
       }, this);
 
       this.actionButton.onDown.add(function() {
+        var saved;
+
         if (this.hInput) {
-          this.saveHighscore();
-          this.highscoreList();
+          saved = this.saveHighscore();
+          if (saved) {
+            this.highscoreList();
+          }
         }
         else {
           this.replay();
@@ -132,7 +136,7 @@
 
     // Handle replay
     replay: function() {
-      this.game.state.start("play");
+      this.game.state.start("menu");
     },
 
     // Show highscore
@@ -265,7 +269,7 @@
 
       // Don't allow AAA
       if (name === "AAA") {
-        return;
+        return false;
       }
 
       // Save highscore
@@ -275,12 +279,15 @@
       this.hInput = false;
       this.hInputs.destroy();
       this.hCursor.destroy();
+
+      return true;
     },
 
     // Highscore list
     highscoreList: function() {
       this.highscoreLimit = 3;
       this.highscoreListGroup = this.game.add.group();
+      this.game.pickle.sortHighscores();
       var fontSize = this.game.world.height / 17.5;
 
       if (this.game.pickle.highscores.length > 0) {

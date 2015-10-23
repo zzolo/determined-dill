@@ -53,6 +53,9 @@
       this.scoreBoost = 300;
       this.scoreBot = 500;
 
+      // Spacing
+      this.padding = 10;
+
       // Initialize tracking variables
       this.resetViewTracking();
 
@@ -185,7 +188,7 @@
       this.resetViewTracking();
       this.resetScore();
 
-      ["hero", "platforms", "coins", "boosts", "scoreText"].forEach(_.bind(function(item) {
+      ["hero", "platforms", "coins", "boosts", "scoreGroup"].forEach(_.bind(function(item) {
         this[item].destroy();
         this[item] = null;
       }, this));
@@ -286,21 +289,34 @@
       this.score = Math.round(this.scoreUp + this.scoreCollect);
 
       // Score text
-      if (!this.scoreText) {
+      if (!this.scoreGroup) {
+        this.scoreGroup = this.game.add.group();
+
+        // Score label
+        this.scoreLabelImage = this.game.add.sprite(
+          this.padding,
+          this.padding * 0.85, "play-sprites", "your-score.png");
+        this.scoreLabelImage.anchor.setTo(0, 0);
+        this.scoreLabelImage.scale.setTo((this.game.width / 6) / this.scoreLabelImage.width);
+        this.scoreGroup.add(this.scoreLabelImage);
+
+        // Score text
         this.scoreText = this.game.add.text(
-          10,
-          this.game.height - 10,
-          "Score: " + this.score, {
-            font: "bold " + (this.game.world.height / 25) + "px Arial",
-            fill: "#fff",
-            align: "center",
+          this.scoreLabelImage.width + (this.padding * 2),
+          this.padding * 0.25,
+          this.score.toLocaleString(), {
+            font: "bold " + (this.game.world.height / 40) + "px Dosis",
+            fill: "#39b54a",
+            align: "left",
           });
-        this.scoreText.anchor.set(0, 1);
-        this.scoreText.fixedToCamera = true;
-        this.scoreText.cameraOffset.setTo(10, this.game.height - 10);
+        this.scoreText.anchor.setTo(0, 0);
+        this.scoreGroup.add(this.scoreText);
+
+        this.scoreGroup.fixedToCamera = true;
+        this.scoreGroup.cameraOffset.setTo(this.padding, this.padding);
       }
       else {
-        this.scoreText.text = "Score: " + this.score.toLocaleString();
+        this.scoreText.text = this.score.toLocaleString();
       }
     },
 

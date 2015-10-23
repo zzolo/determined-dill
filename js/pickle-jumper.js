@@ -73,7 +73,7 @@
       var s = window.localStorage.getItem("highscores");
       s = (s) ? JSON.parse(s) : [];
       this.highscores = s;
-      this.sortHighScores();
+      this.sortHighscores();
       return this.highscores;
     },
 
@@ -85,7 +85,7 @@
     // Set single highscore
     setHighscore: function(score, name) {
       if (this.isHighscore(score)) {
-        this.sortHighScores();
+        this.sortHighscores();
 
         // Remove lowest one if needed
         if (this.highscores.length >= this.highscoreLimit) {
@@ -99,13 +99,13 @@
         });
 
         // Sort and set
-        this.sortHighScores();
+        this.sortHighscores();
         this.setHighscores();
       }
     },
 
     // Sort highscores
-    sortHighScores: function() {
+    sortHighscores: function() {
       this.highscores = _.sortBy(this.highscores, "score");
     },
 

@@ -195,6 +195,7 @@
             <filename>../../../../Downloads/theDeterminedDill/guys/pickle.png</filename>
             <filename>botchy.png</filename>
             <filename>dill.png</filename>
+            <filename>your-score.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
