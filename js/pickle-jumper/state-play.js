@@ -1,25 +1,32 @@
 /* global _:false, Phaser:false */
 
 /**
- * Play state for Pickle Jumper
+ * Play state
  */
 
 (function() {
   "use strict";
-  var pj = window.pickleJumper = window.pickleJumper || {};
-  pj.states = pj.states || {};
 
-  // Constructor for menu
-  pj.states.Play = function() {
+  // Dependencies
+  var prefabs = {
+    Boost: require("./prefab-boost.js"),
+    Botulism: require("./prefab-botulism.js"),
+    Coin: require("./prefab-coin.js"),
+    Hero: require("./prefab-hero.js"),
+    Platform: require("./prefab-platform.js")
+  };
+
+  // Constructor
+  var Play = function() {
     Phaser.State.call(this);
   };
 
   // Extend from State
-  pj.states.Play.prototype = Object.create(Phaser.State.prototype);
-  pj.states.Play.prototype.constructor = pj.states.Game;
+  Play.prototype = Object.create(Phaser.State.prototype);
+  Play.prototype.constructor = Play;
 
   // Add methods
-  _.extend(pj.states.Play.prototype, Phaser.State.prototype, {
+  _.extend(Play.prototype, Phaser.State.prototype, {
     // Preload
     preload: function() {
       // Load up game images
@@ -62,7 +69,7 @@
 
       // Determine where first platform and hero will be
       this.startY = this.game.height - 5;
-      this.hero = new pj.prefabs.Hero(this.game, 0, 0);
+      this.hero = new prefabs.Hero(this.game, 0, 0);
       this.hero.resetPlacement(this.game.width * 0.5, this.startY - this.hero.height);
       this.game.add.existing(this.hero);
 
@@ -197,13 +204,13 @@
       this.platforms = this.game.add.group();
 
       // Add first platform.  TODO: Change to its own prefab, sprite
-      this.base = new pj.prefabs.Platform(this.game, this.game.width * 0.5, this.startY, this.game.width * 2);
+      this.base = new prefabs.Platform(this.game, this.game.width * 0.5, this.startY, this.game.width * 2);
       this.game.add.existing(this.base);
 
       // Add some base platforms
       var previous;
       _.each(_.range(20), _.bind(function(i) {
-        var p = new pj.prefabs.Platform(this.game, 0, 0);
+        var p = new prefabs.Platform(this.game, 0, 0);
         this.placePlatform(p, previous, this.world.height - this.platformSpaceY - this.platformSpaceY * i);
         this.platforms.add(p);
         previous = p;
@@ -257,7 +264,7 @@
     // Generic add with pooling functionallity
     addWithPool: function(pool, prefab, x, y) {
       var o = pool.getFirstDead();
-      o = o || new pj.prefabs[prefab](this.game, x, y);
+      o = o || new prefabs[prefab](this.game, x, y);
 
       // Use custom reset if available
       if (o.resetPlacement) {
@@ -321,4 +328,7 @@
       return false;
     }
   });
+
+  // Export
+  module.exports = Play;
 })();

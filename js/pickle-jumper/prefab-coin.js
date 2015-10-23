@@ -1,16 +1,14 @@
 /* global _:false, Phaser:false */
 
 /**
- * Prefab (objects) coin for platforms
+ * Prefab Coin type item
  */
 
 (function() {
   "use strict";
-  var pj = window.pickleJumper = window.pickleJumper || {};
-  pj.prefabs = pj.prefabs || {};
 
   // Constructor for coin
-  pj.prefabs.Coin = function(game, x, y) {
+  var Coin = function(game, x, y) {
     // Call default sprite
     Phaser.Sprite.call(this, game, x, y, "play-sprites", "magicdill.png");
 
@@ -25,13 +23,16 @@
   };
 
   // Extend from Sprite
-  pj.prefabs.Coin.prototype = Object.create(Phaser.Sprite.prototype);
-  pj.prefabs.Coin.prototype.constructor = pj.prefabs.Coin;
+  Coin.prototype = Object.create(Phaser.Sprite.prototype);
+  Coin.prototype.constructor = Coin;
 
   // Add methods
-  _.extend(pj.prefabs.Coin.prototype, {
+  _.extend(Coin.prototype, {
     update: function() {
 
     }
   });
+
+  // Export
+  module.exports = Coin;
 })();

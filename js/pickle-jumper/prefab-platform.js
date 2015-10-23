@@ -1,16 +1,14 @@
 /* global _:false, Phaser:false */
 
 /**
- * Prefab (objects) object for platforms
+ * Prefab platform
  */
 
 (function() {
   "use strict";
-  var pj = window.pickleJumper = window.pickleJumper || {};
-  pj.prefabs = pj.prefabs || {};
 
-  // Constructor for main character
-  pj.prefabs.Platform = function(game, x, y) {
+  // Constructor
+  var Platform = function(game, x, y) {
     // Call default sprite
     Phaser.Sprite.call(this, game, x, y, "play-sprites", "dillybean.png");
 
@@ -36,11 +34,11 @@
   };
 
   // Extend from Sprite
-  pj.prefabs.Platform.prototype = Object.create(Phaser.Sprite.prototype);
-  pj.prefabs.Platform.prototype.constructor = pj.prefabs.Platform;
+  Platform.prototype = Object.create(Phaser.Sprite.prototype);
+  Platform.prototype.constructor = Platform;
 
   // Add methods
-  _.extend(pj.prefabs.Platform.prototype, {
+  _.extend(Platform.prototype, {
     update: function() {
       if (this.hover) {
         this.body.velocity.x = this.body.velocity.x || this.hoverSpeed;
@@ -69,4 +67,7 @@
       this.getAnchorBoundsX();
     }
   });
+
+  // Export
+  module.exports = Platform;
 })();

@@ -1,16 +1,14 @@
 /* global _:false, Phaser:false */
 
 /**
- * Menu state for Pickle Jumper
+ * Menu state
  */
 
 (function() {
   "use strict";
-  var pj = window.pickleJumper = window.pickleJumper || {};
-  pj.states = pj.states || {};
 
-  // Constructor for menu
-  pj.states.Menu = function() {
+  // Constructor
+  var Menu = function() {
     Phaser.State.call(this);
 
     // Config
@@ -18,11 +16,11 @@
   };
 
   // Extend from State
-  pj.states.Menu.prototype = Object.create(Phaser.State.prototype);
-  pj.states.Menu.prototype.constructor = pj.states.Menu;
+  Menu.prototype = Object.create(Phaser.State.prototype);
+  Menu.prototype.constructor = Menu;
 
   // Add methods
-  _.extend(pj.states.Menu.prototype, Phaser.State.prototype, {
+  _.extend(Menu.prototype, Phaser.State.prototype, {
     // Preload
     preload: function() {
       this.game.load.image("title", "assets/title.png");
@@ -76,4 +74,7 @@
     update: function() {
     }
   });
+
+  // Export
+  module.exports = Menu;
 })();

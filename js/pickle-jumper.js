@@ -7,8 +7,12 @@
 (function() {
   "use strict";
 
-  // Ensure we have the pickle jumper parts
-  var pickleJumper = window.pickleJumper || {};
+  // Dependencies
+  var states = {
+    Gameover: require("./pickle-jumper/state-gameover.js"),
+    Play: require("./pickle-jumper/state-play.js"),
+    Menu: require("./pickle-jumper/state-menu.js"),
+  };
 
   // Constructore for Pickle
   var Pickle = window.Pickle = function(options) {
@@ -39,9 +43,9 @@
       this.game.pickle = this;
 
       // Register states
-      this.game.state.add("menu", pickleJumper.states.Menu);
-      this.game.state.add("play", pickleJumper.states.Play);
-      this.game.state.add("gameover", pickleJumper.states.Gameover);
+      this.game.state.add("menu", states.Menu);
+      this.game.state.add("play", states.Play);
+      this.game.state.add("gameover", states.Gameover);
 
       // Highscore
       this.highscoreLimit = 10;

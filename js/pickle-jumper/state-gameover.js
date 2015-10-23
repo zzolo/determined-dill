@@ -1,16 +1,14 @@
 /* global _:false, Phaser:false */
 
 /**
- * Gameover state for Pickle Jumper
+ * Gameover state
  */
 
 (function() {
   "use strict";
-  var pj = window.pickleJumper = window.pickleJumper || {};
-  pj.states = pj.states || {};
 
   // Constructor
-  pj.states.Gameover = function() {
+  var Gameover = function() {
     Phaser.State.call(this);
 
     // Configure
@@ -18,11 +16,11 @@
   };
 
   // Extend from State
-  pj.states.Gameover.prototype = Object.create(Phaser.State.prototype);
-  pj.states.Gameover.prototype.constructor = pj.states.Gameover;
+  Gameover.prototype = Object.create(Phaser.State.prototype);
+  Gameover.prototype.constructor = Gameover;
 
   // Add methods
-  _.extend(pj.states.Gameover.prototype, Phaser.State.prototype, {
+  _.extend(Gameover.prototype, Phaser.State.prototype, {
     // Preload
     preload: function() {
       this.game.load.image("gameover", "assets/gameover.png");
@@ -265,4 +263,7 @@
       }
     }
   });
+
+  // Export
+  module.exports = Gameover;
 })();

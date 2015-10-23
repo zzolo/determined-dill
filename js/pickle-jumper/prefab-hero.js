@@ -1,16 +1,14 @@
 /* global _:false, Phaser:false */
 
 /**
- * Prefab (objects) object for main character
+ * Prefab Hero/character
  */
 
 (function() {
   "use strict";
-  var pj = window.pickleJumper = window.pickleJumper || {};
-  pj.prefabs = pj.prefabs || {};
 
-  // Constructor for main character
-  pj.prefabs.Hero = function(game, x, y) {
+  // Constructor
+  var Hero = function(game, x, y) {
     // Call default sprite
     Phaser.Sprite.call(this, game, x, y, "play-sprites", "pickle.png");
 
@@ -26,11 +24,11 @@
   };
 
   // Extend from Sprite
-  pj.prefabs.Hero.prototype = Object.create(Phaser.Sprite.prototype);
-  pj.prefabs.Hero.prototype.constructor = pj.prefabs.Hero;
+  Hero.prototype = Object.create(Phaser.Sprite.prototype);
+  Hero.prototype.constructor = Hero;
 
   // Add methods
-  _.extend(pj.prefabs.Hero.prototype, {
+  _.extend(Hero.prototype, {
     update: function() {
       // Track the maximum amount that the hero has travelled
       this.yChange = Math.max(this.yChange, Math.abs(this.y - this.yOrig));
@@ -46,4 +44,7 @@
       this.yChange = 0;
     }
   });
+
+  // Export
+  module.exports = Hero;
 })();

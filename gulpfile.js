@@ -17,17 +17,7 @@ var recess = require("gulp-recess");
 var cssminify = require("gulp-minify-css");
 var autoprefixer = require("gulp-autoprefixer");
 var webserver = require("gulp-webserver");
-var babel = require("gulp-babel");
-
-//var replace = require("gulp-replace");
-/*
-.pipe(replace(
-  "REPLACE-DEFAULT-TEMPLATE",
-  fs.readFileSync("src/tik-tok.tpl.html", {
-    encoding: "utf-8"
-  }).replace(/"/g, "\\\"").replace(/(\r\n|\n|\r|\s+)/g, " ")
-))
-*/
+var browserify = require("gulp-browserify");
 
 // Browser support (for autoprefixer).  This should be more defined
 // for the project as a whole
@@ -58,7 +48,7 @@ var plumberHandler = function(error) {
 // Support JS is a task to look at the supporting JS, like this
 // file
 gulp.task("support-js", function() {
-  return gulp.src(["gulpfile.js"])
+  return gulp.src(["gulpfile.js", "js/**/*.js"])
     .pipe(plumber(plumberHandler))
     .pipe(jshint())
     .pipe(jshint.reporter("jshint-stylish"))
@@ -68,30 +58,22 @@ gulp.task("support-js", function() {
     }));
 });
 
-// Main JS task.  Takes in files from src and outputs
-// to dist.  Gets template and uses JSHint, JSCS, add header, minify
-gulp.task("js", function() {
-  return gulp.src("js/**/*.js")
-    .pipe(plumber(plumberHandler))
-    .pipe(jshint())
-    .pipe(jshint.reporter("jshint-stylish"))
-    .pipe(jshint.reporter("fail"))
-    .pipe(jscs({
-      fix: true
-    }))
-    .pipe(babel({
-      modules: "common"
+// Build JS task
+gulp.task("js", ["support-js"], function() {
+  return gulp.src("js/pickle-jumper.js")
+    .pipe(browserify({
+      debug: true
     }))
     .pipe(header(banner, { pkg: pkg }))
 
     // Non-minified version
     .pipe(gulp.dest("dist"))
+
+    // Minified
     .pipe(uglify())
     .pipe(rename({
       extname: ".min.js"
     }))
-
-    // Minified
     .pipe(gulp.dest("dist"));
 });
 
@@ -149,7 +131,7 @@ gulp.task("webserver", function() {
 });
 
 // Default task is a basic build
-gulp.task("default", ["support-js", "js", "styles"]);
+gulp.task("default", ["js", "styles"]);
 
 // Combine webserver and watch tasks for a more complete server
 gulp.task("server", ["default", "watch", "webserver"]);

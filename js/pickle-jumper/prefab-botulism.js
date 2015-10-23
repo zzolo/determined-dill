@@ -6,11 +6,9 @@
 
 (function() {
   "use strict";
-  var pj = window.pickleJumper = window.pickleJumper || {};
-  pj.prefabs = pj.prefabs || {};
 
   // Constructor
-  pj.prefabs.Botulism = function(game, x, y) {
+  var Botulism = function(game, x, y) {
     // Call default sprite
     Phaser.Sprite.call(this, game, x, y, "play-sprites", "botchy.png");
 
@@ -34,11 +32,11 @@
   };
 
   // Extend from Sprite
-  pj.prefabs.Botulism.prototype = Object.create(Phaser.Sprite.prototype);
-  pj.prefabs.Botulism.prototype.constructor = pj.prefabs.Botulism;
+  Botulism.prototype = Object.create(Phaser.Sprite.prototype);
+  Botulism.prototype.constructor = Botulism;
 
   // Add methods
-  _.extend(pj.prefabs.Botulism.prototype, {
+  _.extend(Botulism.prototype, {
     update: function() {
       // Do hover
       if (this.hover) {
@@ -67,4 +65,7 @@
       this.getAnchorBoundsX();
     }
   });
+
+  // Export
+  module.exports = Botulism;
 })();
