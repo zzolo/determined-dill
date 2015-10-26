@@ -38,20 +38,13 @@
       // Set background
       this.game.stage.backgroundColor = "#b8f4bc";
 
-      //this.game.time.slowMotion = 0.2;
-
-      // Config for difficulty
-      this.platformSpaceY = 110;
-      this.platformGapMax = 200;
-      this.hoverChance = 0.3;
-      this.coinChance = 0.3;
-      this.boostChance = 0.3;
-      this.botChance = 0.1;
+      // Set initial difficulty
+      this.setDifficulty();
 
       // Scoring
       this.scoreCoin = 100;
-      this.scoreBoost = 300;
-      this.scoreBot = 500;
+      this.scoreBoost = 500;
+      this.scoreBot = 1000;
 
       // Spacing
       this.padding = 10;
@@ -173,6 +166,9 @@
 
       // Update score
       this.updateScore();
+
+      // Update difficult
+      this.setDifficulty();
     },
 
     // Platform collision
@@ -342,6 +338,51 @@
       }
 
       return false;
+    },
+
+    // Determine difficulty
+    setDifficulty: function() {
+      // Initial state
+      this.platformSpaceY = 110;
+      this.platformGapMax = 200;
+      this.hoverChance = 0.1;
+      this.coinChance = 0.3;
+      this.boostChance = 0.3;
+      this.botChance = 0.0;
+
+      // Initila physics time
+      //this.game.time.slowMotion = 1;
+
+      // Default
+      if (this.cameraYMin > -this.game.height) {
+        return true;
+      }
+
+      // First level
+      else if (this.cameraYMin > -10000) {
+        this.hoverChance = 0.2;
+        this.coinChance = 0.3;
+        this.boostChance = 0.3;
+        this.botChance = 0.1;
+      }
+
+      // Second level
+      else if (this.cameraYMin > -20000) {
+        this.hoverChance = 0.3;
+        this.coinChance = 0.3;
+        this.boostChance = 0.4;
+        this.botChance = 0.2;
+        this.game.stage.backgroundColor = "#8CEE94";
+      }
+
+      // Third level
+      else if (this.cameraYMin > -30000) {
+        this.hoverChance = 0.4;
+        this.coinChance = 0.2;
+        this.boostChance = 0.4;
+        this.botChance = 0.3;
+        this.game.stage.backgroundColor = "#5FE76B";
+      }
     }
   });
 
