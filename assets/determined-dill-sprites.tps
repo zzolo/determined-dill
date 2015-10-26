@@ -190,12 +190,12 @@
         </struct>
         <key>fileList</key>
         <array>
-            <filename>magicdill.png</filename>
             <filename>dillybean.png</filename>
             <filename>../../../../Downloads/theDeterminedDill/guys/pickle.png</filename>
             <filename>botchy.png</filename>
             <filename>dill.png</filename>
             <filename>your-score.png</filename>
+            <filename>magicdill.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
