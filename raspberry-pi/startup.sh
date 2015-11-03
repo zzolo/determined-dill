@@ -11,4 +11,4 @@ git pull origin master;
 python -m SimpleHTTPServer 8080;
 
 # Start chromium
-chromium -kiosk http://127.0.0.1:8080/
+chromium --kiosk --ignore-certificate-errors http://127.0.0.1:8080/;
