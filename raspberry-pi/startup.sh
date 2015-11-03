@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start GPIO inputs
-sudo /home/pi/installed/Adafruit-Retrogame/retrogame &
+sudo forever /home/pi/installed/Adafruit-Retrogame/retrogame;
 
 # Go to project
 cd /home/pi/installed/pickle-jumper/;
@@ -10,8 +10,9 @@ cd /home/pi/installed/pickle-jumper/;
 wget -q --tries=10 --timeout=20 --spider http://google.com > /dev/null
 if [[ $? -eq 0 ]]; then
   git pull origin master;
+  npm install;
 else
-  echo "Offline"
+  echo "Offline";
 fi
 
 # Start HTTP server
