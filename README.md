@@ -18,6 +18,12 @@ Most of the configuration and setup is taken from this [Adafruit article](https:
     * Enable SSH
     * Change Hostname
     * Enable I2C (GPIO)
+1. Dependencies
+    * `sudo apt-get update`
+    * `curl -sLS https://apt.adafruit.com/add | sudo bash`
+    * `sudo apt-get install chromium node x11-xserver-utils unclutter`
+    * `npm install -g forever`
+    * `npm install`
 1. Hardware setup (see article)
     * If using new Raspberry Pi with [40 pin GPIO](http://pi4j.com/pins/model-b-plus.html)
     * Setting up [Retrogame.c](https://github.com/adafruit/Adafruit-Retrogame):  Overall, the need is for space, left, right keys to be setup.  Notice that its the second set of config.
