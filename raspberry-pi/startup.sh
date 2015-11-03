@@ -17,6 +17,7 @@ fi
 
 # Start HTTP server
 forever start ./node_modules/http-server/bin/http-server $(pwd) -p 8080;
+sleep 5;
 
 # Start chromium
 chromium --kiosk --ignore-certificate-errors http://127.0.0.1:8080/;
