@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start GPIO inputs
-sudo forever /home/pi/installed/Adafruit-Retrogame/retrogame;
+sudo /home/pi/installed/Adafruit-Retrogame/retrogame &
 
 # Go to project
 cd /home/pi/installed/pickle-jumper/;
