@@ -25,7 +25,7 @@ Most of the configuration and setup is taken from this [Adafruit article](https:
     * `npm install -g forever`
     * `npm install`
 1. Hardware setup (see article)
-    * If using new Raspberry Pi with [40 pin GPIO](http://pi4j.com/pins/model-b-plus.html)
+    * Might be a [Raspberry Pi 2 with 40 pin GPIO](http://www.element14.com/community/docs/DOC-73950/l/raspberry-pi-2-model-b-gpio-40-pin-block-pinout)
     * Setting up [Retrogame.c](https://github.com/adafruit/Adafruit-Retrogame):  Overall, the need is for space, left, right keys to be setup.  Notice that its the second set of config that looks like this.
         * `{ 21, KEY_LEFT }`
         * `{ 20, KEY_RIGHT }`
@@ -36,4 +36,4 @@ Most of the configuration and setup is taken from this [Adafruit article](https:
         * `make retrogame`
 1. Startup.  Updates paths in `raspberry-pi/startup.sh` as needed.
     * `sudo nano /etc/xdg/lxsession/LXDE-pi/autostart`
-    * Add `bash /home/pi/installed/pickle-jumper/raspbery-pi/startup.sh`
+    * Add `@/bin/bash /home/pi/installed/pickle-jumper/raspbery-pi/startup.sh`
