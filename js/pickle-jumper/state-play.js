@@ -14,7 +14,8 @@
     Botulism: require("./prefab-botulism.js"),
     Coin: require("./prefab-coin.js"),
     Hero: require("./prefab-hero.js"),
-    Platform: require("./prefab-platform.js")
+    Platform: require("./prefab-platform.js"),
+    Base: require("./prefab-base.js")
   };
 
   // Constructor
@@ -70,7 +71,7 @@
       // Determine where first platform and hero will be
       this.startY = this.game.height - 5;
       this.hero = new prefabs.Hero(this.game, 0, 0);
-      this.hero.resetPlacement(this.game.width * 0.5, this.startY - this.hero.height);
+      this.hero.resetPlacement(this.game.width * 0.5, this.startY - this.hero.height - 50);
       this.game.add.existing(this.hero);
 
       // Containers
@@ -226,8 +227,8 @@
     addPlatforms: function() {
       this.platforms = this.game.add.group();
 
-      // Add first platform.  TODO: Change to its own prefab, sprite
-      this.base = new prefabs.Platform(this.game, this.game.width * 0.5, this.startY, this.game.width * 2);
+      // Add first platform.
+      this.base = new prefabs.Base(this.game, this.game.width * 0.5, this.startY, this.game.width * 2);
       this.game.add.existing(this.base);
 
       // Add some base platforms
