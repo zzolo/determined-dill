@@ -1,20 +1,20 @@
 /* global _:false, Phaser:false */
 
 /**
- * Prefab (objects) boost for boost/dill
+ * Prefab (objects) boost for pepper
  */
 
 (function() {
   "use strict";
 
   // Constructor for Boost
-  var Boost = function(game, x, y) {
+  var Pepper = function(game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "game-sprites", "dill.png");
+    Phaser.Sprite.call(this, game, x, y, "game-sprites", "ghost-pepper.png");
 
     // Size
     this.anchor.setTo(0.5, 0.5);
-    this.scale.setTo((this.game.width / 9) / this.width);
+    this.scale.setTo((this.game.width / 18) / this.width);
 
     // Physics
     this.game.physics.arcade.enableBody(this);
@@ -23,16 +23,16 @@
   };
 
   // Extend from Sprite
-  Boost.prototype = Object.create(Phaser.Sprite.prototype);
-  Boost.prototype.constructor = Boost;
+  Pepper.prototype = Object.create(Phaser.Sprite.prototype);
+  Pepper.prototype.constructor = Pepper;
 
   // Add methods
-  _.extend(Boost.prototype, {
+  _.extend(Pepper.prototype, {
     update: function() {
 
     }
   });
 
   // Export
-  module.exports = Boost;
+  module.exports = Pepper;
 })();

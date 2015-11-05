@@ -42,6 +42,16 @@
       this.reset(x, y);
       this.yOrig = this.y;
       this.yChange = 0;
+    },
+
+    // On fire
+    setOnFire: function() {
+      this.loadTexture("pickle-sprites", "pickle-rocket.png");
+    },
+
+    // Off fire
+    putOutFire: function() {
+      this.loadTexture("pickle-sprites", "pickle-default.png");
     }
   });
 

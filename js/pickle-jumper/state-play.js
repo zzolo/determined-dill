@@ -10,6 +10,7 @@
   // Dependencies
   var prefabs = {
     Boost: require("./prefab-boost.js"),
+    Pepper: require("./prefab-pepper.js"),
     Botulism: require("./prefab-botulism.js"),
     Coin: require("./prefab-coin.js"),
     Hero: require("./prefab-hero.js"),
@@ -46,6 +47,7 @@
       // Scoring
       this.scoreCoin = 100;
       this.scoreBoost = 500;
+      this.scorePepper = 750;
       this.scoreBot = 1000;
 
       // Spacing
@@ -74,6 +76,7 @@
       // Containers
       this.coins = this.game.add.group();
       this.boosts = this.game.add.group();
+      this.peppers = this.game.add.group();
       this.bots = this.game.add.group();
 
       // Platforms
@@ -106,6 +109,11 @@
         this.gameOver();
       }
 
+      // If hero is going down, then no longer on fire
+      if (this.hero.body.velocity.y > 0) {
+        this.putOutFire();
+      }
+
       // Move hero
       this.hero.body.velocity.x =
         (this.cursors.left.isDown) ? -(this.game.physics.arcade.gravity.y / 5) :
@@ -121,24 +129,37 @@
         this.updateScore(this.scoreCoin);
       }, null, this);
 
-      // Boosts collisions
-      this.game.physics.arcade.overlap(this.hero, this.boosts, function(hero, boost) {
-        boost.kill();
-        this.updateScore(this.scoreBoost);
-        hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 1.5;
+      // Boosts collisions.  Don't do anything if on fire
+      if (!this.onFire) {
+        this.game.physics.arcade.overlap(this.hero, this.boosts, function(hero, boost) {
+          boost.kill();
+          this.updateScore(this.scoreBoost);
+          hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 1.5;
+        }, null, this);
+      }
+
+      // Pepper collisions
+      this.game.physics.arcade.overlap(this.hero, this.peppers, function(hero, pepper) {
+        pepper.kill();
+        this.updateScore(this.scorePepper);
+        this.setOnFire();
+        hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 3;
       }, null, this);
 
-      // Botulism collisions.  If herok jumps on top, then kill, otherwise die
-      this.game.physics.arcade.collide(this.hero, this.bots, function(hero, bot) {
-        if (hero.body.touching.down) {
-          bot.kill();
-          this.updateScore(this.scoreBot);
-          hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 0.5;
-        }
-        else {
-          this.gameOver();
-        }
-      }, null, this);
+      // Botulism collisions.  If herok jumps on top, then kill, otherwise die, and
+      // ignore if on fire.
+      if (!this.onFire) {
+        this.game.physics.arcade.collide(this.hero, this.bots, function(hero, bot) {
+          if (hero.body.touching.down) {
+            bot.kill();
+            this.updateScore(this.scoreBot);
+            hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 0.5;
+          }
+          else {
+            this.gameOver();
+          }
+        }, null, this);
+      }
 
       // For each platform, find out which is the highest
       // if one goes below the camera view, then create a new
@@ -157,7 +178,7 @@
       }, this);
 
       // Remove any fluff
-      ["coins", "boosts", "bots"].forEach(_.bind(function(pool) {
+      ["coins", "boosts", "bots", "peppers"].forEach(_.bind(function(pool) {
         this[pool].forEachAlive(function(p) {
           // Check if this one is of the screen
           if (p.y > this.camera.y + this.game.height) {
@@ -175,6 +196,7 @@
 
     // Platform collision
     updateHeroPlatform: function(hero) {
+      this.putOutFire();
       hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 0.7;
     },
 
@@ -259,6 +281,9 @@
       }
       else if (Math.random() <= this.botChance) {
         this.addWithPool(this.bots, "Botulism", x, y);
+      }
+      else if (Math.random() <= this.pepperChance) {
+        this.addWithPool(this.peppers, "Pepper", x, y);
       }
     },
 
@@ -351,6 +376,7 @@
       this.coinChance = 0.3;
       this.boostChance = 0.3;
       this.botChance = 0.0;
+      this.pepperChance = 0.1;
 
       // Initila physics time
       //this.game.time.slowMotion = 1;
@@ -385,6 +411,18 @@
         this.botChance = 0.3;
         this.game.stage.backgroundColor = "#5FE76B";
       }
+    },
+
+    // Set on fire
+    setOnFire: function() {
+      this.onFire = true;
+      this.hero.setOnFire();
+    },
+
+    // Set off fire
+    putOutFire: function() {
+      this.onFire = false;
+      this.hero.putOutFire();
     }
   });
 
