@@ -1,0 +1,75 @@
+{"frames": {
+
+"magicdill.png":
+{
+	"frame": {"x":2,"y":2,"w":200,"h":234},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":234},
+	"sourceSize": {"w":200,"h":234},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"ghost-pepper.png":
+{
+	"frame": {"x":204,"y":2,"w":300,"h":247},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":300,"h":247},
+	"sourceSize": {"w":300,"h":247},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"dill.png":
+{
+	"frame": {"x":506,"y":2,"w":300,"h":143},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":300,"h":143},
+	"sourceSize": {"w":300,"h":143},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"botchy.png":
+{
+	"frame": {"x":2,"y":251,"w":300,"h":264},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":300,"h":264},
+	"sourceSize": {"w":300,"h":264},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"dillybean.png":
+{
+	"frame": {"x":304,"y":251,"w":600,"h":115},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":600,"h":115},
+	"sourceSize": {"w":600,"h":115},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"your-score.png":
+{
+	"frame": {"x":2,"y":517,"w":800,"h":132},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":800,"h":132},
+	"sourceSize": {"w":800,"h":132},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"jar.png":
+{
+	"frame": {"x":2,"y":651,"w":800,"h":306},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":800,"h":306},
+	"sourceSize": {"w":800,"h":306},
+	"pivot": {"x":0.5,"y":0.5}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "game-sprites.png",
+	"format": "RGBA8888",
+	"size": {"w":906,"h":959},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:cb0dd76cf3a7d4097fb8723e60a421f3:c5ffaea923a803b950585d1c6fd7c0c8:6c31e76162759595c120c84b8850a36e$"
+}
+}

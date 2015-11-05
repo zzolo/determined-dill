@@ -10,7 +10,7 @@
   // Constructor
   var Hero = function(game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "play-sprites", "pickle.png");
+    Phaser.Sprite.call(this, game, x, y, "pickle-sprites", "pickle-default.png");
 
     // Configure
     this.anchor.setTo(0.5);

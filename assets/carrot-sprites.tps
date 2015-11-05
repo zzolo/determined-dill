@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>3.9.4</string>
         <key>fileName</key>
-        <string>/Users/zzolo/Code/personal/pickle-jumper/assets/determined-dill-sprites.tps</string>
+        <string>/Users/zzolo/Code/personal/pickle-jumper/assets/carrot-sprites.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -28,7 +28,7 @@
             </struct>
         </array>
         <key>allowRotation</key>
-        <false/>
+        <true/>
         <key>premultiplyAlpha</key>
         <false/>
         <key>shapeDebug</key>
@@ -76,7 +76,7 @@
         <key>jpgQuality</key>
         <uint>80</uint>
         <key>pngOptimizationLevel</key>
-        <uint>1</uint>
+        <uint>0</uint>
         <key>webpQualityLevel</key>
         <uint>101</uint>
         <key>textureSubPath</key>
@@ -104,7 +104,7 @@
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
             <key>algorithm</key>
-            <enum type="AlgorithmSettings::AlgorithmId">MaxRects</enum>
+            <enum type="AlgorithmSettings::AlgorithmId">Basic</enum>
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
@@ -147,7 +147,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>determined-dill-sprites.json</filename>
+                <filename>carrot-sprites.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -182,7 +182,7 @@
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Trim</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>heuristicMask</key>
             <false/>
             <key>pivotPoint</key>
@@ -190,12 +190,12 @@
         </struct>
         <key>fileList</key>
         <array>
-            <filename>dillybean.png</filename>
-            <filename>../../../../Downloads/theDeterminedDill/guys/pickle.png</filename>
-            <filename>botchy.png</filename>
-            <filename>dill.png</filename>
-            <filename>your-score.png</filename>
-            <filename>magicdill.png</filename>
+            <filename>carrot-snap-01.png</filename>
+            <filename>carrot-snap-02.png</filename>
+            <filename>carrot-snap-03.png</filename>
+            <filename>carrot-snap-04.png</filename>
+            <filename>carrot-snap-05.png</filename>
+            <filename>carrot-snap-06.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

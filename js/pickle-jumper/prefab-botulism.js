@@ -10,7 +10,7 @@
   // Constructor
   var Botulism = function(game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "play-sprites", "botchy.png");
+    Phaser.Sprite.call(this, game, x, y, "game-sprites", "botchy.png");
 
     // Size
     this.anchor.setTo(0.5, 0.5);

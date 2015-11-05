@@ -1,0 +1,66 @@
+{"frames": {
+
+"pickle-default.png":
+{
+	"frame": {"x":2,"y":2,"w":125,"h":348},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":125,"h":348},
+	"sourceSize": {"w":125,"h":348},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"pickle-rocket.png":
+{
+	"frame": {"x":129,"y":2,"w":200,"h":349},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":349},
+	"sourceSize": {"w":200,"h":349},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"pickle-jump-01.png":
+{
+	"frame": {"x":2,"y":353,"w":170,"h":515},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":170,"h":515},
+	"sourceSize": {"w":170,"h":515},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"pickle-jump-04.png":
+{
+	"frame": {"x":174,"y":353,"w":170,"h":515},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":170,"h":515},
+	"sourceSize": {"w":170,"h":515},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"pickle-jump-02.png":
+{
+	"frame": {"x":2,"y":870,"w":170,"h":515},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":170,"h":515},
+	"sourceSize": {"w":170,"h":515},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"pickle-jump-03.png":
+{
+	"frame": {"x":174,"y":870,"w":170,"h":515},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":170,"h":515},
+	"sourceSize": {"w":170,"h":515},
+	"pivot": {"x":0.5,"y":0.5}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "pickle-sprites.png",
+	"format": "RGBA8888",
+	"size": {"w":346,"h":1387},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:83a746f9500beea2df117cd784135a1c:2589b7c8841ed1f6c8fa181225453843:0b4771ef33632f433116193c7dee7df0$"
+}
+}

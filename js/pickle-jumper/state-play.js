@@ -30,7 +30,9 @@
     // Preload
     preload: function() {
       // Load up game images
-      this.game.load.atlas("play-sprites", "assets/determined-dill-sprites.png", "assets/determined-dill-sprites.json");
+      this.game.load.atlas("game-sprites", "assets/game-sprites.png", "assets/game-sprites.json");
+      this.game.load.atlas("pickle-sprites", "assets/pickle-sprites.png", "assets/pickle-sprites.json");
+      this.game.load.atlas("carrot-sprites", "assets/carrot-sprites.png", "assets/carrot-sprites.json");
     },
 
     // Create
@@ -291,7 +293,7 @@
         // Score label
         this.scoreLabelImage = this.game.add.sprite(
           this.padding,
-          this.padding * 0.85, "play-sprites", "your-score.png");
+          this.padding * 0.85, "game-sprites", "your-score.png");
         this.scoreLabelImage.anchor.setTo(0, 0);
         this.scoreLabelImage.scale.setTo((this.game.width / 6) / this.scoreLabelImage.width);
         this.scoreGroup.add(this.scoreLabelImage);

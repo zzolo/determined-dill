@@ -23,8 +23,8 @@
   _.extend(Menu.prototype, Phaser.State.prototype, {
     // Preload
     preload: function() {
-      this.game.load.image("title", "assets/title.png");
-      this.game.load.image("play", "assets/title-play.png");
+      // Load up game images
+      this.game.load.atlas("title-sprites", "assets/title-sprites.png", "assets/title-sprites.json");
     },
 
     // Create
@@ -33,13 +33,13 @@
       this.game.stage.backgroundColor = "#b8f4bc";
 
       // Place title
-      this.titleImage = this.game.add.sprite(this.game.width / 2, this.padding * 3, "title");
+      this.titleImage = this.game.add.sprite(this.game.width / 2, this.padding * 3, "title-sprites", "title.png");
       this.titleImage.anchor.setTo(0.5, 0);
       this.titleImage.scale.setTo((this.game.width - (this.padding * 2)) / this.titleImage.width);
       this.game.add.existing(this.titleImage);
 
       // Place play
-      this.playImage = this.game.add.sprite(this.game.width / 2, this.game.height - this.padding * 3, "play");
+      this.playImage = this.game.add.sprite(this.game.width / 2, this.game.height - this.padding * 3, "title-sprites", "title-play.png");
       this.playImage.anchor.setTo(0.4, 1);
       this.playImage.scale.setTo((this.game.width * 0.75) / this.titleImage.width);
       this.game.add.existing(this.playImage);

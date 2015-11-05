@@ -23,9 +23,8 @@
   _.extend(Gameover.prototype, Phaser.State.prototype, {
     // Preload
     preload: function() {
-      this.game.load.image("gameover", "assets/gameover.png");
-      this.game.load.image("play", "assets/title-play.png");
-      this.game.load.image("your-score", "assets/your-score.png");
+      // Load up game images
+      this.game.load.atlas("gameover-sprites", "assets/gameover-sprites.png", "assets/gameover-sprites.json");
     },
 
     // Create
@@ -34,7 +33,7 @@
       this.game.stage.backgroundColor = "#8cc63f";
 
       // Place title
-      this.titleImage = this.game.add.sprite(this.game.width / 2, this.padding * 3, "gameover");
+      this.titleImage = this.game.add.sprite(this.game.width / 2, this.padding * 3, "gameover-sprites", "gameover.png");
       this.titleImage.anchor.setTo(0.5, 0);
       this.titleImage.scale.setTo((this.game.width - (this.padding * 8)) / this.titleImage.width);
       this.game.add.existing(this.titleImage);
@@ -55,7 +54,8 @@
       }
 
       // Place re-play
-      this.replayImage = this.game.add.sprite(this.game.width - this.padding * 2, this.game.height - this.padding * 2, "play");
+      this.replayImage = this.game.add.sprite(this.game.width - this.padding * 2,
+        this.game.height - this.padding * 2, "gameover-sprites", "title-play.png");
       this.replayImage.anchor.setTo(1, 1);
       this.replayImage.scale.setTo((this.game.width * 0.25) / this.replayImage.width);
       this.game.add.existing(this.replayImage);
@@ -146,7 +146,7 @@
       // Place label
       this.yourScoreImage = this.game.add.sprite(
         this.game.width / 2 + (this.padding * 3),
-        this.titleImage.height + (this.padding * 7.5), "your-score");
+        this.titleImage.height + (this.padding * 7.5), "gameover-sprites", "your-score.png");
       this.yourScoreImage.anchor.setTo(1, 0);
       this.yourScoreImage.scale.setTo(((this.game.width / 2) - (this.padding * 6)) / this.yourScoreImage.width);
 

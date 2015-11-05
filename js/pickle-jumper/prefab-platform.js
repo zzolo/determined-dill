@@ -10,7 +10,7 @@
   // Constructor
   var Platform = function(game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "play-sprites", "dillybean.png");
+    Phaser.Sprite.call(this, game, x, y, "game-sprites", "dillybean.png");
 
     // Configure
     this.anchor.setTo(0.5, 0.5);

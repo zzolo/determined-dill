@@ -10,7 +10,7 @@
   // Constructor for Boost
   var Boost = function(game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "play-sprites", "dill.png");
+    Phaser.Sprite.call(this, game, x, y, "game-sprites", "dill.png");
 
     // Size
     this.anchor.setTo(0.5, 0.5);

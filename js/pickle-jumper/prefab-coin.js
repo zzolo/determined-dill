@@ -10,7 +10,7 @@
   // Constructor for coin
   var Coin = function(game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "play-sprites", "magicdill.png");
+    Phaser.Sprite.call(this, game, x, y, "game-sprites", "magicdill.png");
 
     // Configure
     this.anchor.setTo(0.5, 0.5);
