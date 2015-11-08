@@ -63,6 +63,31 @@
       this.reset(x, y);
       this.body.velocity.x = 0;
       this.getAnchorBoundsX();
+    },
+
+    // Reset image
+    resetImage: function() {
+      this.height = this.originalHeight;
+      this.width = this.originalWidth;
+      this.alpha = 1;
+    },
+
+    // Murdered (not just kill)
+    murder: function() {
+      // Get original height
+      this.originalHeight = this.height;
+      this.originalWidth = this.width;
+
+      var tween = this.game.add.tween(this).to({
+        height: 0,
+        width: 0,
+        alpha: 0
+      }, 200, Phaser.Easing.Linear.None, true);
+
+      tween.onComplete.add(_.bind(function() {
+        this.resetImage();
+        this.kill();
+      }, this));
     }
   });
 

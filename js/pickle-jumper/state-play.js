@@ -171,12 +171,12 @@
         hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 3;
       }, null, this);
 
-      // Botulism collisions.  If herok jumps on top, then kill, otherwise die, and
+      // Botulism collisions.  If hero jumps on top, then kill, otherwise die, and
       // ignore if on fire.
       if (!this.onFire) {
         this.game.physics.arcade.collide(this.hero, this.bots, function(hero, bot) {
           if (hero.body.touching.down) {
-            bot.kill();
+            bot.murder();
             this.updateScore(this.scoreBot);
             hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 0.5;
           }
@@ -423,7 +423,7 @@
       this.hoverChance = 0.1;
       this.miniChance = 0.3;
       this.dillChance = 0.3;
-      this.botChance = 0.0;
+      this.botChance = 1;
       this.pepperChance = 0.1;
       this.carrotChance = 0.5;
 
