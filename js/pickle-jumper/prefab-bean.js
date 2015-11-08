@@ -1,14 +1,14 @@
 /* global _:false, Phaser:false */
 
 /**
- * Prefab platform
+ * Prefab bean platform
  */
 
 (function() {
   "use strict";
 
   // Constructor
-  var Platform = function(game, x, y) {
+  var Bean = function(game, x, y) {
     // Call default sprite
     Phaser.Sprite.call(this, game, x, y, "game-sprites", "dillybean.png");
 
@@ -35,11 +35,11 @@
   };
 
   // Extend from Sprite
-  Platform.prototype = Object.create(Phaser.Sprite.prototype);
-  Platform.prototype.constructor = Platform;
+  Bean.prototype = Object.create(Phaser.Sprite.prototype);
+  Bean.prototype.constructor = Bean;
 
   // Add methods
-  _.extend(Platform.prototype, {
+  _.extend(Bean.prototype, {
     update: function() {
       if (this.hover) {
         this.body.velocity.x = this.body.velocity.x || this.hoverSpeed;
@@ -70,5 +70,5 @@
   });
 
   // Export
-  module.exports = Platform;
+  module.exports = Bean;
 })();

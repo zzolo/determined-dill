@@ -2,56 +2,47 @@
 
 "carrot-snap-01.png":
 {
-	"frame": {"x":2,"y":2,"w":590,"h":325},
+	"frame": {"x":2,"y":2,"w":570,"h":81},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":590,"h":325},
-	"sourceSize": {"w":590,"h":325},
+	"spriteSourceSize": {"x":0,"y":0,"w":570,"h":81},
+	"sourceSize": {"w":570,"h":81},
 	"pivot": {"x":0.5,"y":0.5}
 },
 "carrot-snap-02.png":
 {
-	"frame": {"x":594,"y":2,"w":590,"h":325},
+	"frame": {"x":2,"y":85,"w":584,"h":83},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":590,"h":325},
-	"sourceSize": {"w":590,"h":325},
+	"spriteSourceSize": {"x":0,"y":0,"w":584,"h":83},
+	"sourceSize": {"w":584,"h":83},
 	"pivot": {"x":0.5,"y":0.5}
 },
 "carrot-snap-03.png":
 {
-	"frame": {"x":2,"y":329,"w":590,"h":325},
+	"frame": {"x":2,"y":170,"w":574,"h":189},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":590,"h":325},
-	"sourceSize": {"w":590,"h":325},
+	"spriteSourceSize": {"x":0,"y":0,"w":574,"h":189},
+	"sourceSize": {"w":574,"h":189},
 	"pivot": {"x":0.5,"y":0.5}
 },
 "carrot-snap-04.png":
 {
-	"frame": {"x":594,"y":329,"w":590,"h":325},
+	"frame": {"x":2,"y":361,"w":528,"h":279},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":590,"h":325},
-	"sourceSize": {"w":590,"h":325},
+	"spriteSourceSize": {"x":0,"y":0,"w":528,"h":279},
+	"sourceSize": {"w":528,"h":279},
 	"pivot": {"x":0.5,"y":0.5}
 },
 "carrot-snap-05.png":
 {
-	"frame": {"x":594,"y":329,"w":590,"h":325},
+	"frame": {"x":2,"y":642,"w":492,"h":319},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":590,"h":325},
-	"sourceSize": {"w":590,"h":325},
-	"pivot": {"x":0.5,"y":0.5}
-},
-"carrot-snap-06.png":
-{
-	"frame": {"x":2,"y":656,"w":590,"h":325},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":590,"h":325},
-	"sourceSize": {"w":590,"h":325},
+	"spriteSourceSize": {"x":0,"y":0,"w":492,"h":319},
+	"sourceSize": {"w":492,"h":319},
 	"pivot": {"x":0.5,"y":0.5}
 }},
 "meta": {
@@ -59,8 +50,8 @@
 	"version": "1.0",
 	"image": "carrot-sprites.png",
 	"format": "RGBA8888",
-	"size": {"w":1186,"h":983},
+	"size": {"w":588,"h":963},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:35a00678d7cda15840f17053bbccb414:4060b708bf41d48b70e69cc822378873:7715e2442a9019f70ec9574352c1e3bd$"
+	"smartupdate": "$TexturePacker:SmartUpdate:d2b4ae64a79819866e4e8e57862f169c:94b99f6d4b769ce1d21fc13658acfb91:7715e2442a9019f70ec9574352c1e3bd$"
 }
 }

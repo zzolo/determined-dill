@@ -1,20 +1,20 @@
 /* global _:false, Phaser:false */
 
 /**
- * Prefab base platform
+ * Prefab mini pickle (kind of like a coin, just points)
  */
 
 (function() {
   "use strict";
 
   // Constructor
-  var Base = function(game, x, y) {
+  var Mini = function(game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "game-sprites", "jar.png");
+    Phaser.Sprite.call(this, game, x, y, "game-sprites", "magicdill.png");
 
     // Configure
     this.anchor.setTo(0.5, 0.5);
-    this.scale.setTo((this.game.width / 2) / this.width);
+    this.scale.setTo((this.game.width / 20) / this.width);
 
     // Physics
     this.game.physics.arcade.enableBody(this);
@@ -23,15 +23,16 @@
   };
 
   // Extend from Sprite
-  Base.prototype = Object.create(Phaser.Sprite.prototype);
-  Base.prototype.constructor = Base;
+  Mini.prototype = Object.create(Phaser.Sprite.prototype);
+  Mini.prototype.constructor = Mini;
 
   // Add methods
-  _.extend(Base.prototype, {
+  _.extend(Mini.prototype, {
     update: function() {
+
     }
   });
 
   // Export
-  module.exports = Base;
+  module.exports = Mini;
 })();

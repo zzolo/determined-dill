@@ -1,14 +1,14 @@
 /* global _:false, Phaser:false */
 
 /**
- * Prefab (objects) boost for boost/dill
+ * Prefab (objects) Dill for boosting
  */
 
 (function() {
   "use strict";
 
-  // Constructor for Boost
-  var Boost = function(game, x, y) {
+  // Constructor
+  var Dill = function(game, x, y) {
     // Call default sprite
     Phaser.Sprite.call(this, game, x, y, "game-sprites", "dill.png");
 
@@ -23,16 +23,16 @@
   };
 
   // Extend from Sprite
-  Boost.prototype = Object.create(Phaser.Sprite.prototype);
-  Boost.prototype.constructor = Boost;
+  Dill.prototype = Object.create(Phaser.Sprite.prototype);
+  Dill.prototype.constructor = Dill;
 
   // Add methods
-  _.extend(Boost.prototype, {
+  _.extend(Dill.prototype, {
     update: function() {
 
     }
   });
 
   // Export
-  module.exports = Boost;
+  module.exports = Dill;
 })();

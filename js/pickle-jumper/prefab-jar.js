@@ -1,20 +1,20 @@
 /* global _:false, Phaser:false */
 
 /**
- * Prefab Coin type item
+ * Prefab jar platform
  */
 
 (function() {
   "use strict";
 
-  // Constructor for coin
-  var Coin = function(game, x, y) {
+  // Constructor
+  var Jar = function(game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "game-sprites", "magicdill.png");
+    Phaser.Sprite.call(this, game, x, y, "game-sprites", "jar.png");
 
     // Configure
     this.anchor.setTo(0.5, 0.5);
-    this.scale.setTo((this.game.width / 20) / this.width);
+    this.scale.setTo((this.game.width / 2) / this.width);
 
     // Physics
     this.game.physics.arcade.enableBody(this);
@@ -23,16 +23,15 @@
   };
 
   // Extend from Sprite
-  Coin.prototype = Object.create(Phaser.Sprite.prototype);
-  Coin.prototype.constructor = Coin;
+  Jar.prototype = Object.create(Phaser.Sprite.prototype);
+  Jar.prototype.constructor = Jar;
 
   // Add methods
-  _.extend(Coin.prototype, {
+  _.extend(Jar.prototype, {
     update: function() {
-
     }
   });
 
   // Export
-  module.exports = Coin;
+  module.exports = Jar;
 })();

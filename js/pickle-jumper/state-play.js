@@ -9,13 +9,14 @@
 
   // Dependencies
   var prefabs = {
-    Boost: require("./prefab-boost.js"),
+    Dill: require("./prefab-dill.js"),
     Pepper: require("./prefab-pepper.js"),
     Botulism: require("./prefab-botulism.js"),
-    Coin: require("./prefab-coin.js"),
+    Mini: require("./prefab-mini.js"),
     Hero: require("./prefab-hero.js"),
-    Platform: require("./prefab-platform.js"),
-    Base: require("./prefab-base.js")
+    Bean: require("./prefab-bean.js"),
+    Carrot: require("./prefab-carrot.js"),
+    Jar: require("./prefab-jar.js")
   };
 
   // Constructor
@@ -41,11 +42,11 @@
     create: function() {
       // Set initial difficulty and level settings
       this.createSuperLevelBG();
-      this.setDifficulty();
+      this.updateDifficulty();
 
       // Scoring
-      this.scoreCoin = 100;
-      this.scoreBoost = 500;
+      this.scoreMini = 100;
+      this.scoreDill = 500;
       this.scorePepper = 750;
       this.scoreBot = 1000;
 
@@ -70,8 +71,10 @@
       this.game.physics.arcade.gravity.y = 1000;
 
       // Containers
-      this.coins = this.game.add.group();
-      this.boosts = this.game.add.group();
+      this.beans = this.game.add.group();
+      this.carrots = this.game.add.group();
+      this.minis = this.game.add.group();
+      this.dills = this.game.add.group();
       this.peppers = this.game.add.group();
       this.bots = this.game.add.group();
 
@@ -120,21 +123,42 @@
         (this.cursors.left.isDown) ? -(this.game.physics.arcade.gravity.y / 5) :
         (this.cursors.right.isDown) ? (this.game.physics.arcade.gravity.y / 5) : 0;
 
+      // Collisions
+      this.updateCollisions();
+
+      // Items (platforms and items)
+      this.updateItems();
+
+      // Update score
+      this.updateScore();
+
+      // Update difficult
+      this.updateDifficulty();
+
+      // Debug
+      if (this.game.pickle.options.debug) {
+        this.game.debug.body(this.hero);
+      }
+    },
+
+    // Handle collisions
+    updateCollisions: function() {
       // Platform collisions
-      this.game.physics.arcade.collide(this.hero, this.platforms, this.updateHeroPlatform, null, this);
+      this.game.physics.arcade.collide(this.hero, this.beans, this.updateHeroPlatform, null, this);
+      this.game.physics.arcade.collide(this.hero, this.carrots, this.updateHeroPlatform, null, this);
       this.game.physics.arcade.collide(this.hero, this.base, this.updateHeroPlatform, null, this);
 
-      // Coin collisions
-      this.game.physics.arcade.overlap(this.hero, this.coins, function(hero, coin) {
-        coin.kill();
-        this.updateScore(this.scoreCoin);
+      // Mini collisions
+      this.game.physics.arcade.overlap(this.hero, this.minis, function(hero, mini) {
+        mini.kill();
+        this.updateScore(this.scoreMini);
       }, null, this);
 
-      // Boosts collisions.  Don't do anything if on fire
+      // Dill collisions.  Don't do anything if on fire
       if (!this.onFire) {
-        this.game.physics.arcade.overlap(this.hero, this.boosts, function(hero, boost) {
-          boost.kill();
-          this.updateScore(this.scoreBoost);
+        this.game.physics.arcade.overlap(this.hero, this.dills, function(hero, dill) {
+          dill.kill();
+          this.updateScore(this.scoreDill);
           hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 1.5;
         }, null, this);
       }
@@ -161,25 +185,30 @@
           }
         }, null, this);
       }
+    },
 
-      // For each platform, find out which is the highest
-      // if one goes below the camera view, then create a new
-      // one at a distance from the highest one
-      // these are pooled so they are very performant.
-      this.platforms.forEachAlive(function(p) {
-        var platform;
-        this.platformYMin = Math.min(this.platformYMin, p.y);
+    // Platform collision
+    updateHeroPlatform: function(hero, item) {
+      // Make sure no longer on fire
+      this.putOutFire();
 
-        // Check if this one is of the screen
-        if (p.y > this.camera.y + this.game.height) {
-          p.kill();
-          platform = this.platforms.getFirstDead();
-          this.placePlatform(this.platforms.getFirstDead(), this.platforms.getTop());
-        }
-      }, this);
+      // Jump
+      hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 0.7;
 
-      // Remove any fluff
-      ["coins", "boosts", "bots", "peppers"].forEach(_.bind(function(pool) {
+      // If carrot, snap
+      if (item instanceof prefabs.Carrot) {
+        item.snap();
+      }
+    },
+
+    // Handle items
+    updateItems: function() {
+      var highest;
+      var bean;
+      var carrot;
+
+      // Remove any items that are off screen
+      ["minis", "dills", "bots", "peppers", "beans", "carrots"].forEach(_.bind(function(pool) {
         this[pool].forEachAlive(function(p) {
           // Check if this one is of the screen
           if (p.y > this.camera.y + this.game.height) {
@@ -188,23 +217,27 @@
         }, this);
       }, this));
 
-      // Update score
-      this.updateScore();
+      // Determine where the last platform is
+      ["beans", "carrots"].forEach(_.bind(function(group) {
+        this[group].forEachAlive(function(p) {
+          if (p.y < this.platformYMin) {
+            this.platformYMin = p.y;
+            highest = p;
+          }
+        }, this);
+      }, this));
 
-      // Update difficult
-      this.setDifficulty();
-
-      // Debug
-      if (this.game.pickle.options.debug) {
-        this.game.debug.body(this.hero);
-        this.game.debug.body(this.platforms);
+      // Add new platform if needed
+      carrot = this.carrots.getFirstDead();
+      bean = this.beans.getFirstDead();
+      if (carrot && bean) {
+        if (Math.random() < this.carrotChance) {
+          this.placePlatform(carrot, highest);
+        }
+        else {
+          this.placePlatform(bean, highest);
+        }
       }
-    },
-
-    // Platform collision
-    updateHeroPlatform: function(hero) {
-      this.putOutFire();
-      hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 0.7;
     },
 
     // Shutdown
@@ -215,9 +248,12 @@
       this.resetViewTracking();
       this.resetScore();
 
-      ["hero", "platforms", "coins", "boosts", "scoreGroup"].forEach(_.bind(function(item) {
-        this[item].destroy();
-        this[item] = null;
+      ["hero", "beans", "minis", "dills", "peppers",
+        "carrots", "scoreGroup"].forEach(_.bind(function(item) {
+        if (this[item]) {
+          this[item].destroy();
+          this[item] = null;
+        }
       }, this));
     },
 
@@ -231,25 +267,30 @@
 
     // Add platform pool and create initial one
     addPlatforms: function() {
-      this.platforms = this.game.add.group();
-
-      // Add first platform.
-      this.base = new prefabs.Base(this.game, this.game.width * 0.5, this.startY, this.game.width * 2);
+      // Add base platform (jar).
+      this.base = new prefabs.Jar(this.game, this.game.width * 0.5, this.startY, this.game.width * 2);
       this.game.add.existing(this.base);
 
-      // Add some base platforms
+      // Add some base carrots (but have them off screen)
+      _.each(_.range(10), _.bind(function() {
+        var p = new prefabs.Carrot(this.game, -999, this.game.height * 2);
+        this.carrots.add(p);
+      }, this));
+
+      // Add some base beans
       var previous;
       _.each(_.range(20), _.bind(function(i) {
-        var p = new prefabs.Platform(this.game, 0, 0);
+        var p = new prefabs.Bean(this.game, 0, 0);
         this.placePlatform(p, previous, this.world.height - this.platformSpaceY - this.platformSpaceY * i);
-        this.platforms.add(p);
+        this.beans.add(p);
         previous = p;
       }, this));
     },
 
     // Place platform
-    placePlatform: function(platform, previousPlatform, overrideY) {
+    placePlatform: function(platform, previousPlatform, overrideY, platformType) {
       platform.resetSettings();
+      platformType = (platformType === undefined) ? "bean" : platformType;
       var y = overrideY || this.platformYMin - this.platformSpaceY;
       var minX = platform.minX;
       var maxX = platform.maxX;
@@ -280,11 +321,11 @@
       if (Math.random() <= this.hoverChance) {
         platform.hover = true;
       }
-      else if (Math.random() <= this.coinChance) {
-        this.addWithPool(this.coins, "Coin", x, y);
+      else if (Math.random() <= this.miniChance) {
+        this.addWithPool(this.minis, "Mini", x, y);
       }
-      else if (Math.random() <= this.boostChance) {
-        this.addWithPool(this.boosts, "Boost", x, y);
+      else if (Math.random() <= this.dillChance) {
+        this.addWithPool(this.dills, "Dill", x, y);
       }
       else if (Math.random() <= this.botChance) {
         this.addWithPool(this.bots, "Botulism", x, y);
@@ -375,15 +416,16 @@
     },
 
     // Determine difficulty
-    setDifficulty: function() {
+    updateDifficulty: function() {
       // Initial state
       this.platformSpaceY = 110;
       this.platformGapMax = 200;
       this.hoverChance = 0.1;
-      this.coinChance = 0.3;
-      this.boostChance = 0.3;
+      this.miniChance = 0.3;
+      this.dillChance = 0.3;
       this.botChance = 0.0;
       this.pepperChance = 0.1;
+      this.carrotChance = 0.5;
 
       // Set initial background
       this.game.stage.backgroundColor = "#937D6F";
@@ -400,8 +442,8 @@
       // Second level
       else if (this.cameraYMin > -40000) {
         this.hoverChance = 0.3;
-        this.coinChance = 0.3;
-        this.boostChance = 0.4;
+        this.miniChance = 0.3;
+        this.dillChance = 0.4;
         this.botChance = 0.2;
         this.game.stage.backgroundColor = "#BDDEB6";
       }
@@ -409,8 +451,8 @@
       // Third level
       else if (this.cameraYMin > -60000) {
         this.hoverChance = 0.4;
-        this.coinChance = 0.2;
-        this.boostChance = 0.4;
+        this.miniChance = 0.2;
+        this.dillChance = 0.4;
         this.botChance = 0.3;
         this.game.stage.backgroundColor = "#B1E0EC";
       }
@@ -419,8 +461,8 @@
       else if (this.cameraYMin > -80000) {
         this.bgGroup.visible = true;
         this.hoverChance = 0.4;
-        this.coinChance = 0.2;
-        this.boostChance = 0.4;
+        this.miniChance = 0.2;
+        this.dillChance = 0.4;
         this.botChance = 0.3;
       }
     },
