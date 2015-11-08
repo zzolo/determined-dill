@@ -39,10 +39,8 @@
 
     // Create
     create: function() {
-      // Set background
-      this.game.stage.backgroundColor = "#b8f4bc";
-
-      // Set initial difficulty
+      // Set initial difficulty and level settings
+      this.createSuperLevelBG();
       this.setDifficulty();
 
       // Scoring
@@ -379,39 +377,68 @@
       this.botChance = 0.0;
       this.pepperChance = 0.1;
 
+      // Set initial background
+      this.game.stage.backgroundColor = "#937D6F";
+
       // Initila physics time
       //this.game.time.slowMotion = 1;
 
-      // Default
-      if (this.cameraYMin > -this.game.height) {
-        return true;
-      }
-
       // First level
-      else if (this.cameraYMin > -10000) {
-        this.hoverChance = 0.2;
-        this.coinChance = 0.3;
-        this.boostChance = 0.3;
-        this.botChance = 0.1;
+      if (this.cameraYMin > -20000) {
+        // Default
+        return;
       }
 
       // Second level
-      else if (this.cameraYMin > -20000) {
+      else if (this.cameraYMin > -40000) {
         this.hoverChance = 0.3;
         this.coinChance = 0.3;
         this.boostChance = 0.4;
         this.botChance = 0.2;
-        this.game.stage.backgroundColor = "#8CEE94";
+        this.game.stage.backgroundColor = "#BDDEB6";
       }
 
       // Third level
-      else if (this.cameraYMin > -30000) {
+      else if (this.cameraYMin > -60000) {
         this.hoverChance = 0.4;
         this.coinChance = 0.2;
         this.boostChance = 0.4;
         this.botChance = 0.3;
-        this.game.stage.backgroundColor = "#5FE76B";
+        this.game.stage.backgroundColor = "#B1E0EC";
       }
+
+      // Fourth level
+      else if (this.cameraYMin > -80000) {
+        this.bgGroup.visible = true;
+        this.hoverChance = 0.4;
+        this.coinChance = 0.2;
+        this.boostChance = 0.4;
+        this.botChance = 0.3;
+      }
+    },
+
+    // Create super level gradient
+    createSuperLevelBG: function() {
+      this.slbgBM = this.game.make.bitmapData(this.game.width, this.game.height);
+
+      // Create gradient
+      var gradient = this.slbgBM.context.createLinearGradient(
+        0, this.game.height / 2, this.game.width, this.game.height / 2);
+      gradient.addColorStop(0, "#4F3F9A");
+      gradient.addColorStop(1, "#E70B8D");
+
+      // Add to bitmap
+      this.slbgBM.context.fillStyle = gradient;
+      this.slbgBM.context.fillRect(0, 0, this.game.width, this.game.height);
+
+      // Create background group so that we can put this there later
+      this.bgGroup = this.game.add.group();
+      this.bgGroup.fixedToCamera = true;
+
+      // Add crazy background and then hide since adding in middle
+      // really messes with things
+      this.bgGroup.create(0, 0, this.slbgBM);
+      this.bgGroup.visible = false;
     },
 
     // Set on fire
