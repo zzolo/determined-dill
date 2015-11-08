@@ -24,6 +24,7 @@
     this.body.immovable = true;
 
     // Only allow for collission up
+    this.body.checkCollision.up = true;
     this.body.checkCollision.down = false;
     this.body.checkCollision.left = false;
     this.body.checkCollision.right = false;

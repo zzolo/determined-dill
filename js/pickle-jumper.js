@@ -58,10 +58,6 @@
       this.game.state.start("menu");
 
       // Debug
-      if (this.options.debug && this.game.camera) {
-        this.game.debug.cameraInfo(this.game.camera, 10, 10);
-      }
-
       if (this.options.debug) {
         this.resetHighscores();
         this.getHighscores();

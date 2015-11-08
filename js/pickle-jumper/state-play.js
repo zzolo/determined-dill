@@ -52,6 +52,9 @@
       // Spacing
       this.padding = 10;
 
+      // Determine where first platform and hero will be.
+      this.startY = this.game.height - 5;
+
       // Initialize tracking variables
       this.resetViewTracking();
 
@@ -66,12 +69,6 @@
       this.game.physics.startSystem(Phaser.Physics.ARCADE);
       this.game.physics.arcade.gravity.y = 1000;
 
-      // Determine where first platform and hero will be
-      this.startY = this.game.height - 5;
-      this.hero = new prefabs.Hero(this.game, 0, 0);
-      this.hero.resetPlacement(this.game.width * 0.5, this.startY - this.hero.height - 50);
-      this.game.add.existing(this.hero);
-
       // Containers
       this.coins = this.game.add.group();
       this.boosts = this.game.add.group();
@@ -80,6 +77,11 @@
 
       // Platforms
       this.addPlatforms();
+
+      // Add hero here so is always on top.
+      this.hero = new prefabs.Hero(this.game, 0, 0);
+      this.hero.resetPlacement(this.game.width * 0.5, this.startY - this.hero.height - 50);
+      this.game.add.existing(this.hero);
 
       // Initialize score
       this.resetScore();
@@ -191,6 +193,12 @@
 
       // Update difficult
       this.setDifficulty();
+
+      // Debug
+      if (this.game.pickle.options.debug) {
+        this.game.debug.body(this.hero);
+        this.game.debug.body(this.platforms);
+      }
     },
 
     // Platform collision

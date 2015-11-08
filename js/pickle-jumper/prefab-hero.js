@@ -10,11 +10,12 @@
   // Constructor
   var Hero = function(game, x, y) {
     // Call default sprite
-    Phaser.Sprite.call(this, game, x, y, "pickle-sprites", "pickle-default.png");
+    Phaser.Sprite.call(this, game, x, y, "pickle-sprites", "pickle-jump-02.png");
 
     // Configure
     this.anchor.setTo(0.5);
-    this.scale.setTo((this.game.width / 25) / this.width);
+    this.originalScale = (this.game.width / 22) / this.width;
+    this.scale.setTo(this.originalScale);
     this.game.physics.arcade.enableBody(this);
 
     // Track where the hero started and how much the distance
@@ -82,10 +83,12 @@
     setOnFire: function() {
       this.onFire = true;
       this.loadTexture("pickle-sprites", "pickle-rocket.png");
+      this.scale.setTo(this.originalScale * 1.5);
     },
 
     // Off fire
     putOutFire: function() {
+      this.scale.setTo(this.originalScale);
       this.onFire = false;
     }
   });
