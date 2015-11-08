@@ -17,6 +17,7 @@
     this.originalScale = (this.game.width / 22) / this.width;
     this.scale.setTo(this.originalScale);
     this.game.physics.arcade.enableBody(this);
+    this.isDead = false;
 
     // Track where the hero started and how much the distance
     // has changed from that point
@@ -67,14 +68,14 @@
 
     // Jump up
     doJumpUp: function() {
-      if (!this.onFire) {
+      if (!this.onFire && !this.isDead) {
         this.animations.play("jump-up", 15, false);
       }
     },
 
     // Jump down
     doJumpDown: function() {
-      if (!this.onFire) {
+      if (!this.onFire && !this.isDead) {
         this.animations.play("jump-down", 15, false);
       }
     },
@@ -90,6 +91,20 @@
     putOutFire: function() {
       this.scale.setTo(this.originalScale);
       this.onFire = false;
+    },
+
+    // Murder with botchy
+    botchyMuder: function() {
+      this.isDead = true;
+      this.loadTexture("pickle-sprites", "pickle-botchy.png");
+
+      var tween = this.game.add.tween(this).to({
+        angle: 175
+      }, 500, Phaser.Easing.Linear.None, true);
+
+      tween.onComplete.add(_.bind(function() {
+        // Do something
+      }, this));
     }
   });
 

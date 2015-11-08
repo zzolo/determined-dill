@@ -143,6 +143,11 @@
 
     // Handle collisions
     updateCollisions: function() {
+      // When dead, no collisions, just fall to death.
+      if (this.hero.isDead) {
+        return;
+      }
+
       // Platform collisions
       this.game.physics.arcade.collide(this.hero, this.beans, this.updateHeroPlatform, null, this);
       this.game.physics.arcade.collide(this.hero, this.carrots, this.updateHeroPlatform, null, this);
@@ -181,7 +186,8 @@
             hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 0.5;
           }
           else {
-            this.gameOver();
+            hero.botchyMuder();
+            bot.murder();
           }
         }, null, this);
       }

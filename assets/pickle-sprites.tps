@@ -192,12 +192,12 @@
         </struct>
         <key>fileList</key>
         <array>
-            <filename>pickle-default.png</filename>
             <filename>pickle-rocket.png</filename>
             <filename>pickle-jump-01.png</filename>
             <filename>pickle-jump-02.png</filename>
             <filename>pickle-jump-03.png</filename>
             <filename>pickle-jump-04.png</filename>
+            <filename>pickle-botchy.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
