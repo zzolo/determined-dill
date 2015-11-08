@@ -64,6 +64,16 @@
       }
     },
 
+    // Hide overlay parts
+    hideOverlay: function(selector) {
+      $(this.options.parentEl).find(selector).hide();
+    },
+
+    // Show overlay parts
+    showOverlay: function(selector) {
+      $(this.options.parentEl).find(selector).show();
+    },
+
     // Get high scores
     getHighscores: function() {
       var s = window.localStorage.getItem("highscores");
@@ -133,6 +143,7 @@
   var p;
   p = new Pickle({
     el: "#pickle-jumper",
+    parentEl: ".game-wrapper",
     debug: false
   });
 })();

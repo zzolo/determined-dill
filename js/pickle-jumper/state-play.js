@@ -429,9 +429,9 @@
       this.hoverChance = 0.1;
       this.miniChance = 0.3;
       this.dillChance = 0.3;
-      this.botChance = 1;
+      this.botChance = 0;
       this.pepperChance = 0.1;
-      this.carrotChance = 0.5;
+      this.carrotChance = 0.1;
 
       // Set initial background
       this.game.stage.backgroundColor = "#937D6F";
@@ -440,7 +440,7 @@
       //this.game.time.slowMotion = 1;
 
       // First level
-      if (this.cameraYMin > -20000) {
+      if (!this.cameraYMin || this.cameraYMin > -20000) {
         // Default
         return;
       }
@@ -451,6 +451,7 @@
         this.miniChance = 0.3;
         this.dillChance = 0.4;
         this.botChance = 0.2;
+        this.carrotChance = 0.2;
         this.game.stage.backgroundColor = "#BDDEB6";
       }
 
@@ -460,16 +461,18 @@
         this.miniChance = 0.2;
         this.dillChance = 0.4;
         this.botChance = 0.3;
+        this.carrotChance = 0.3;
         this.game.stage.backgroundColor = "#B1E0EC";
       }
 
       // Fourth level
-      else if (this.cameraYMin > -80000) {
+      else {
         this.bgGroup.visible = true;
         this.hoverChance = 0.4;
         this.miniChance = 0.2;
         this.dillChance = 0.4;
         this.botChance = 0.3;
+        this.carrotChance = 0.4;
       }
     },
 

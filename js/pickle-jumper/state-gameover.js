@@ -10,9 +10,6 @@
   // Constructor
   var Gameover = function() {
     Phaser.State.call(this);
-
-    // Configure
-    this.padding = 10;
   };
 
   // Extend from State
@@ -32,10 +29,14 @@
       // Set background
       this.game.stage.backgroundColor = "#8cc63f";
 
+      // Make padding dependent on width
+      this.padding = this.game.width / 50;
+
       // Place title
-      this.titleImage = this.game.add.sprite(this.game.width / 2, this.padding * 3, "gameover-sprites", "gameover.png");
+      this.titleImage = this.game.add.sprite(0, 0, "gameover-sprites", "gameover.png");
       this.titleImage.anchor.setTo(0.5, 0);
-      this.titleImage.scale.setTo((this.game.width - (this.padding * 8)) / this.titleImage.width);
+      this.titleImage.scale.setTo((this.game.width - (this.padding * 16)) / this.titleImage.width);
+      this.titleImage.reset(this.centerStageX(this.titleImage), this.padding * 2);
       this.game.add.existing(this.titleImage);
 
       // Highscore list.  Can't seem to find a way to pass the score
@@ -323,6 +324,16 @@
           }, this), 1000);
         }, this));
       }
+    },
+
+    // Center x on stage
+    centerStageX: function(obj) {
+      return ((this.game.width - obj.width) / 2) + (obj.width / 2);
+    },
+
+    // Center x on stage
+    centerStageY: function(obj) {
+      return ((this.game.height - obj.height) / 2) + (obj.height / 2);
     }
   });
 

@@ -10,9 +10,6 @@
   // Constructor
   var Menu = function() {
     Phaser.State.call(this);
-
-    // Config
-    this.padding = 20;
   };
 
   // Extend from State
@@ -32,16 +29,22 @@
       // Set background
       this.game.stage.backgroundColor = "#b8f4bc";
 
+      // Make padding dependent on width
+      this.padding = this.game.width / 50;
+
       // Place title
-      this.titleImage = this.game.add.sprite(this.game.width / 2, this.padding * 3, "title-sprites", "title.png");
-      this.titleImage.anchor.setTo(0.5, 0);
-      this.titleImage.scale.setTo((this.game.width - (this.padding * 2)) / this.titleImage.width);
+      this.titleImage = this.game.add.sprite(0, 0, "title-sprites", "title.png");
+      this.titleImage.anchor.setTo(0.5, 0.5);
+      this.titleImage.scale.setTo((this.game.width - (this.padding * 4)) / this.titleImage.width);
+      this.titleImage.reset(this.centerStageX(this.titleImage),
+        this.centerStageY(this.titleImage) - this.padding * 4);
       this.game.add.existing(this.titleImage);
 
       // Place play
-      this.playImage = this.game.add.sprite(this.game.width / 2, this.game.height - this.padding * 3, "title-sprites", "title-play.png");
+      this.playImage = this.game.add.sprite(0, 0, "title-sprites", "title-play.png");
       this.playImage.anchor.setTo(0.4, 1);
-      this.playImage.scale.setTo((this.game.width * 0.75) / this.titleImage.width);
+      this.playImage.scale.setTo((this.game.width * 0.5) / this.titleImage.width);
+      this.playImage.reset(this.centerStageX(this.playImage), this.game.height - this.padding * 2);
       this.game.add.existing(this.playImage);
 
       // Add hover for mouse
@@ -67,11 +70,22 @@
 
     // Start playing
     go: function() {
+      this.game.pickle.hideOverlay(".credits");
       this.game.state.start("play");
     },
 
     // Update
     update: function() {
+    },
+
+    // Center x on stage
+    centerStageX: function(obj) {
+      return ((this.game.width - obj.width) / 2) + (obj.width / 2);
+    },
+
+    // Center x on stage
+    centerStageY: function(obj) {
+      return ((this.game.height - obj.height) / 2) + (obj.height / 2);
     }
   });
 

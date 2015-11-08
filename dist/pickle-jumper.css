@@ -7,13 +7,57 @@
 /**
  * Main LESS for Pickle Jumper
  */
+@font-face {
+  font-family: "Marketing";
+  src: url("../assets/fonts/MarketingScript.ttf") format("truetype");
+}
+@font-face {
+  font-family: "OmnesRoman";
+  src: url("../assets/fonts/OmnesRegular-Roman.otf") format("truetype");
+}
+@font-face {
+  font-family: "OmnesRoman";
+  src: url("../assets/fonts/OmnesSemibold-Roman.otf") format("truetype");
+  font-weight: bold;
+}
+@font-face {
+  font-family: "OmnesRoman";
+  src: url("../assets/fonts/OmnesBlack-Roman.otf") format("truetype");
+  font-weight: 900;
+}
 body {
   padding: 0;
   margin: 0;
   background-color: #000000;
 }
-.pickle-jumper-container {
+.game-wrapper {
+  position: relative;
   width: 100%;
+  height: 100%;
   max-width: 650px;
   margin: 0 auto;
+}
+.game-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.game-overlay .credits {
+  top: 0;
+  width: 100%;
+  padding: 0.5em;
+  font-family: "OmnesRoman", "Times New Roman", Times, serif;
+  font-size: 1.5em;
+  color: #37E145;
+  text-align: center;
+  pointer-events: auto;
+}
+.game-overlay .credits a {
+  color: #1EC82C;
+  text-decoration: none;
+}
+.pickle-jumper-container {
+  width: 100%;
+  height: 100%;
 }
