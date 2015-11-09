@@ -10,6 +10,8 @@ Artwork by Caitlin and Same of [Squawk](http://squawkproductions.com/) and code 
 
 Built with [Phaser](http://phaser.io/).  This is the first time I have made a browser game, let alone used Phaser, so decisions and conventions used here may not be best practices.  Lots of ideas and code take from examples and articles around the internets.
 
+This should work in modern browsers, but has only been tested on newer versions of Chrome and Firefox.
+
 ## Raspberry Pi setup
 
 Most of the configuration and setup is taken from this [Adafruit article](https://learn.adafruit.com/retro-gaming-with-raspberry-pi/overview).  The same hardware (joystick and buttons) were used.
