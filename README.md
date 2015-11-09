@@ -1,13 +1,14 @@
-# Pickle Jumper
+# the Determined Dill
 
-Pickle Jumper, a Doodle Jump copy cat, for the MN Pickle Festival (and beyond).
+How far can you get the Dill out of the pickle jar?  Find out in this jumper style pickle-themed game.
 
-## Notes
+## About
 
-* http://blog.lessmilk.com/how-to-make-flappy-bird-in-html5-1/
-* http://gamedevacademy.org/platformer-tutorial-with-phaser-and-tiled/
-* http://codepen.io/jackrugile/pen/fqHtn
-* https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/
+Built for the [2015 Minnesota Pickle Festival](http://mnpicklefestival.com/).
+
+Artwork by Caitlin and Same of [Squawk](http://squawkproductions.com/) and code by [Alan](http://zzolo.org/).  Game play by committee.
+
+Built with [Phaser](http://phaser.io/).  This is the first time I have made a browser game, let alone used Phaser, so decisions and conventions used here may not be best practices.  Lots of ideas and code take from examples and articles around the internets.
 
 ## Raspberry Pi setup
 
