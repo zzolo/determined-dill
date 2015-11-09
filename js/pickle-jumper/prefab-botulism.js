@@ -26,6 +26,12 @@
     this.body.allowGravity = false;
     this.body.immovable = true;
 
+    // Make the collision body a bit smaller
+    var bodyScale = 0.8;
+    this.body.setSize(this.width * bodyScale, this.height * bodyScale,
+      (this.width - (this.width * bodyScale)) / 2,
+      (this.height - (this.height * bodyScale)) / 2);
+
     // Determine anchor x bounds
     this.paddingX = 10;
     this.resetPlacement(x, y);
