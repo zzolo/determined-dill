@@ -140,10 +140,12 @@
   });
 
   // Create app
-  var p;
-  p = new Pickle({
-    el: "#pickle-jumper",
-    parentEl: ".game-wrapper",
-    debug: false
+  $(document).ready(function() {
+    var p;
+    p = new Pickle({
+      el: "#pickle-jumper",
+      parentEl: ".game-wrapper",
+      debug: false
+    });
   });
 })();
