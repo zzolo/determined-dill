@@ -39,6 +39,9 @@
   // Add methods
   _.extend(Hero.prototype, {
     update: function() {
+      var rx;
+      var ry;
+
       // Track the maximum amount that the hero has travelled
       this.yChange = Math.max(this.yChange, Math.abs(this.y - this.yOrig));
 
@@ -56,6 +59,14 @@
       else if (this.body.velocity.y < 0 && !this.goingUp) {
         this.goingUp = true;
         this.doJumpUp();
+      }
+
+      // Shake when on fire
+      if (this.onFire) {
+        rx = this.game.rnd.integerInRange(-4, 4);
+        ry = this.game.rnd.integerInRange(-2, 2);
+        this.position.x += rx;
+        this.position.y += ry;
       }
     },
 
