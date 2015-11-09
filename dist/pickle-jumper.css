@@ -56,6 +56,14 @@ body {
   color: #1EC82C;
   text-decoration: none;
 }
+.game-overlay .high-reset {
+  top: 40%;
+  display: none;
+  padding: 1em;
+  color: #FFFFFF;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.3);
+}
 .game-no-show {
   position: absolute;
   z-index: -100;

@@ -56,6 +56,9 @@
       this.highscoreLimit = 10;
       this.getHighscores();
 
+      // Allow for score reset with keyboard
+      this.handleReset();
+
       // Start with menu
       this.game.state.start("menu");
 
@@ -86,8 +89,13 @@
     },
 
     // Show overlay parts
-    showOverlay: function(selector) {
-      $(this.options.parentEl).find(selector).show();
+    showOverlay: function(selector, time) {
+      if (time) {
+        $(this.options.parentEl).find(selector).fadeIn("fast").delay(time).fadeOut("fast");
+      }
+      else {
+        $(this.options.parentEl).find(selector).show();
+      }
     },
 
     // Get high scores
@@ -151,7 +159,21 @@
 
     // Reset highschores
     resetHighscores: function() {
+      this.highscores = [];
       window.localStorage.removeItem("highscores");
+    },
+
+    // Key combo reset
+    handleReset: function() {
+      $(window).on("keyup", _.bind(function(e) {
+        // Ctrl + J
+        if (e.ctrlKey && (e.which === 74)) {
+          this.resetHighscores();
+
+          // Show message
+          this.showOverlay(".high-reset", 1000);
+        }
+      }, this));
     }
   });
 

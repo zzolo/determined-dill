@@ -160,7 +160,7 @@
         });
       this.scoreText.anchor.setTo(0.5, 0);
       this.scoreText.reset(this.centerStageX(this.scoreText),
-        this.titleImage.height + this.yourScoreImage.height + (this.padding * 6.5));
+        this.titleImage.height + this.yourScoreImage.height + (this.padding * 7));
 
       // Add groups
       _.delay(_.bind(function() {
