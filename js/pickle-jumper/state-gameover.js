@@ -157,17 +157,15 @@
         this.game.width / 2 + (this.padding * 5),
         this.titleImage.height + (this.padding * 6),
         this.score.toLocaleString(), {
-          font: "bold " + (this.game.world.height / 15) + "px Dosis",
+          font: "bold " + (this.game.world.height / 15) + "px OmnesRoman",
           fill: "#39b54a",
           align: "left",
         });
       this.scoreText.anchor.setTo(0, 0);
 
-      // Font loading thing
-      _.delay(_.bind(function() {
-        this.scoreGroup.add(this.yourScoreImage);
-        this.scoreGroup.add(this.scoreText);
-      }, this), 1000);
+      // Add groups
+      this.scoreGroup.add(this.yourScoreImage);
+      this.scoreGroup.add(this.scoreText);
     },
 
     // Make highest score input
@@ -183,7 +181,7 @@
         this.game.world.width * 0.33333,
         y,
         "A", {
-          font: "bold " + (this.game.world.height / 15) + "px Dosis",
+          font: "bold " + (this.game.world.height / 15) + "px OmnesRoman",
           fill: "#FFFFFF",
           align: "center",
         });
@@ -196,7 +194,7 @@
         this.game.world.width * 0.5,
         y,
         "A", {
-          font: "bold " + (this.game.world.height / 15) + "px Dosis",
+          font: "bold " + (this.game.world.height / 15) + "px OmnesRoman",
           fill: "#FFFFFF",
           align: "center",
         });
@@ -209,7 +207,7 @@
         this.game.world.width * 0.66666,
         y,
         "A", {
-          font: "bold " + (this.game.world.height / 15) + "px Dosis",
+          font: "bold " + (this.game.world.height / 15) + "px OmnesRoman",
           fill: "#FFFFFF",
           align: "center",
         });
@@ -299,7 +297,7 @@
             this.game.width / 2 + (this.padding * 3),
             (this.game.height * 0.6) + ((fontSize + this.padding) * i),
             h.name, {
-              font: "bold " + (this.game.world.height / 15) + "px Dosis",
+              font: "bold " + (this.game.world.height / 15) + "px OmnesRoman",
               fill: "#b8f4bc",
               align: "right",
             });
@@ -311,17 +309,15 @@
             this.game.width / 2 + (this.padding * 5),
             (this.game.height * 0.6) + ((fontSize + this.padding) * i),
             h.score.toLocaleString(), {
-              font: "bold " + (this.game.world.height / 15) + "px Dosis",
+              font: "bold " + (this.game.world.height / 15) + "px OmnesRoman",
               fill: "#39b54a",
               align: "left",
             });
           score.anchor.setTo(0, 0);
 
-          // Font loading thing
-          _.delay(_.bind(function() {
-            this.highscoreListGroup.add(name);
-            this.highscoreListGroup.add(score);
-          }, this), 1000);
+          // Add to groups
+          this.highscoreListGroup.add(name);
+          this.highscoreListGroup.add(score);
         }, this));
       }
     },

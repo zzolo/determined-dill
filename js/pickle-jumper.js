@@ -1,4 +1,4 @@
-/* global _:false, $:false, Phaser:false */
+/* global _:false, $:false, Phaser:false, WebFont:false */
 
 /**
  * Main JS for Pickle Jumper
@@ -26,8 +26,10 @@
     this.width = this.$el.width();
     this.height = $(window).height();
 
-    // Start
-    this.start();
+    // Start (load fonts first)
+    this.fonts = ["Marketing", "OmnesRoman"];
+    this.fontUrls = ["dist/pickle-jumper.css"];
+    this.loadFonts(this.start);
   };
 
   // Add properties
@@ -62,6 +64,20 @@
         this.resetHighscores();
         this.getHighscores();
       }
+    },
+
+    // Load fonts.  URLS is relative to HTML, not JS
+    loadFonts: function(done) {
+      done = _.bind(done, this);
+
+      WebFont.load({
+        custom: {
+          families: this.fonts
+        },
+        urls: this.fontUrls,
+        classes: false,
+        active: done
+      });
     },
 
     // Hide overlay parts

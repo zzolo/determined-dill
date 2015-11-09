@@ -380,7 +380,7 @@
         */
 
         // Score text
-        this.scoreText = this.game.add.text(this.padding, 0,
+        this.scoreText = new Phaser.Text(this.game, this.padding, 0,
           this.score.toLocaleString(), {
             font: "bold " + (this.game.world.height / 30) + "px OmnesRoman",
             fill: "#39b54a",
@@ -388,10 +388,15 @@
           });
         this.scoreText.anchor.setTo(0, 0);
         this.scoreText.setShadow(1, 1, "rgba(0, 0, 0, 0.3)", 2);
-        this.scoreGroup.add(this.scoreText);
 
+        // Fix score to top
         this.scoreGroup.fixedToCamera = true;
         this.scoreGroup.cameraOffset.setTo(this.padding, this.padding);
+
+        // Hack around font-loading issues
+        _.delay(_.bind(function() {
+          this.scoreGroup.add(this.scoreText);
+        }, this), 1000);
       }
       else {
         this.scoreText.text = this.score.toLocaleString();
