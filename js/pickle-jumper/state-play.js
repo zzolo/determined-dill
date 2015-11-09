@@ -135,6 +135,9 @@
       // Update difficult
       this.updateDifficulty();
 
+      // Shake
+      this.updateWorldShake();
+
       // Debug
       if (this.game.pickle.options.debug) {
         this.game.debug.body(this.hero);
@@ -213,7 +216,7 @@
       var bean;
       var carrot;
 
-      // Remove any items that are off screen
+      // Remove any pool items that are off screen
       ["minis", "dills", "bots", "peppers", "beans", "carrots"].forEach(_.bind(function(pool) {
         this[pool].forEachAlive(function(p) {
           // Check if this one is of the screen
@@ -221,6 +224,13 @@
             p.kill();
           }
         }, this);
+      }, this));
+
+      // Remove any regular items that are off screen
+      ["base"].forEach(_.bind(function(p) {
+        if (this[p] && this[p].alive && this[p].y > this.camera.y + this.game.height * 2) {
+          this[p].kill();
+        }
       }, this));
 
       // Determine where the last platform is
@@ -242,6 +252,23 @@
         }
         else {
           this.placePlatform(bean, highest);
+        }
+      }
+    },
+
+    // Shake world effect
+    updateWorldShake: function() {
+      if (this.shakeWorldCounter > 0) {
+        var magnitude = Math.max(this.shakeWorldCounter / 50, 1) + 1;
+        var rx = this.game.rnd.integerInRange(-4 * magnitude, 4 * magnitude);
+        var ry = this.game.rnd.integerInRange(-2 * magnitude, 2 * magnitude);
+        this.game.camera.x += rx;
+        this.game.camera.y += ry;
+        this.shakeWorldCounter--;
+
+        if (this.shakeWorldCounter <= 0) {
+          this.game.camera.x = 0;
+          this.game.camera.y = 0;
         }
       }
     },
@@ -269,6 +296,11 @@
       // via a state change.
       this.game.pickle.score = this.score;
       this.game.state.start("gameover");
+    },
+
+    // Shake world
+    shake: function(length) {
+      this.shakeWorldCounter = (!length) ? 0 : this.shakeWorldCounter + length;
     },
 
     // Add platform pool and create initial one
