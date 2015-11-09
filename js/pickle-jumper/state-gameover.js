@@ -285,7 +285,7 @@
 
     // Highscore list
     highscoreList: function() {
-      this.highscoreLimit = 3;
+      this.highscoreLimit = this.game.pickle.highscoreLimit || 3;
       this.highscoreListGroup = this.game.add.group();
       this.game.pickle.sortHighscores();
       var fontSize = this.game.world.height / 25;

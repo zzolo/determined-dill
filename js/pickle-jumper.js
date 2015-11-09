@@ -53,7 +53,7 @@
       this.game.state.add("gameover", states.Gameover);
 
       // Highscore
-      this.highscoreLimit = 10;
+      this.highscoreLimit = this.options.highscoreLimit || 10;
       this.getHighscores();
 
       // Allow for score reset with keyboard
@@ -183,6 +183,7 @@
     p = new Pickle({
       el: "#pickle-jumper",
       parentEl: ".game-wrapper",
+      highscoreLimit: 4,
       debug: false
     });
   });
