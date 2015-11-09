@@ -382,7 +382,7 @@
         // Score text
         this.scoreText = new Phaser.Text(this.game, this.padding, 0,
           this.score.toLocaleString(), {
-            font: "bold " + (this.game.world.height / 30) + "px OmnesRoman",
+            font: "" + (this.game.world.height / 30) + "px OmnesRoman-bold",
             fill: "#39b54a",
             align: "left",
           });

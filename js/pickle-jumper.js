@@ -27,7 +27,7 @@
     this.height = $(window).height();
 
     // Start (load fonts first)
-    this.fonts = ["Marketing", "OmnesRoman"];
+    this.fonts = ["Marketing", "OmnesRoman", "OmnesRoman-bold", "OmnesRoman-900"];
     this.fontUrls = ["dist/pickle-jumper.css"];
     this.loadFonts(this.start);
   };
