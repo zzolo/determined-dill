@@ -7,22 +7,31 @@
     <meta name="description" content="Can you get the pickle to freedom?">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://fonts.googleapis.com/css?family=Dosis:700" rel="stylesheet" type="text/css">
-
     <link rel="stylesheet" href="bower_components/normalize-css/normalize.css">
     <link rel="stylesheet" href="dist/pickle-jumper.css">
   </head>
   <body>
     <div class="game-wrapper">
+      <div class="game-no-show">
+        <div class="font-loader font-1">ABC</div>
+        <div class="font-loader font-2">ABC</div>
+        <div class="font-loader font-3">ABC</div>
+      </div>
+
       <div class="game-overlay">
-        <div class="credits">
+        <div class="credits state-menu">
           A <a href="http://zzolo.org" target="_blank">zzolo</a> and <a href="http://squawkproductions.com/" target="_blank">Squawk</a> collaboration.
+        </div>
+
+        <div class="high-reset">
+          High scores reset.
         </div>
       </div>
 
       <div id="pickle-jumper" class="pickle-jumper-container"></div>
     </div>
 
+    <script src="bower_components/webfontloader/webfontloader.js"></script>
     <script src="bower_components/underscore/underscore-min.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/phaser/build/phaser.min.js"></script>

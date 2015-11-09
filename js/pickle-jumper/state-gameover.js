@@ -145,25 +145,24 @@
       this.scoreGroup = this.game.add.group();
 
       // Place label
-      this.yourScoreImage = this.game.add.sprite(
-        this.game.width / 2 + (this.padding * 3),
-        this.titleImage.height + (this.padding * 7.5), "gameover-sprites", "your-score.png");
-      this.yourScoreImage.anchor.setTo(1, 0);
-      this.yourScoreImage.scale.setTo(((this.game.width / 2) - (this.padding * 6)) / this.yourScoreImage.width);
+      this.yourScoreImage = new Phaser.Sprite(this.game, 0, 0, "gameover-sprites", "your-score.png");
+      this.yourScoreImage.anchor.setTo(0.5, 0);
+      this.yourScoreImage.scale.setTo(((this.game.width * 0.5) - (this.padding * 6)) / this.yourScoreImage.width);
+      this.yourScoreImage.reset(this.centerStageX(this.yourScoreImage),
+        this.titleImage.height + (this.padding * 8));
 
       // Score
-      this.scoreText = new Phaser.Text(
-        this.game,
-        this.game.width / 2 + (this.padding * 5),
-        this.titleImage.height + (this.padding * 6),
+      this.scoreText = new Phaser.Text(this.game, 0, 0,
         this.score.toLocaleString(), {
-          font: "bold " + (this.game.world.height / 15) + "px Dosis",
+          font: "" + (this.game.world.height / 10) + "px OmnesRoman-900",
           fill: "#39b54a",
-          align: "left",
+          align: "center",
         });
-      this.scoreText.anchor.setTo(0, 0);
+      this.scoreText.anchor.setTo(0.5, 0);
+      this.scoreText.reset(this.centerStageX(this.scoreText),
+        this.titleImage.height + this.yourScoreImage.height + (this.padding * 7));
 
-      // Font loading thing
+      // Add groups
       _.delay(_.bind(function() {
         this.scoreGroup.add(this.yourScoreImage);
         this.scoreGroup.add(this.scoreText);
@@ -183,7 +182,7 @@
         this.game.world.width * 0.33333,
         y,
         "A", {
-          font: "bold " + (this.game.world.height / 15) + "px Dosis",
+          font: "" + (this.game.world.height / 15) + "px OmnesRoman-bold",
           fill: "#FFFFFF",
           align: "center",
         });
@@ -196,7 +195,7 @@
         this.game.world.width * 0.5,
         y,
         "A", {
-          font: "bold " + (this.game.world.height / 15) + "px Dosis",
+          font: "" + (this.game.world.height / 15) + "px OmnesRoman-bold",
           fill: "#FFFFFF",
           align: "center",
         });
@@ -209,7 +208,7 @@
         this.game.world.width * 0.66666,
         y,
         "A", {
-          font: "bold " + (this.game.world.height / 15) + "px Dosis",
+          font: "" + (this.game.world.height / 15) + "px OmnesRoman-bold",
           fill: "#FFFFFF",
           align: "center",
         });
@@ -286,20 +285,39 @@
 
     // Highscore list
     highscoreList: function() {
-      this.highscoreLimit = 3;
+      this.highscoreLimit = this.game.pickle.highscoreLimit || 3;
       this.highscoreListGroup = this.game.add.group();
       this.game.pickle.sortHighscores();
-      var fontSize = this.game.world.height / 17.5;
+      var fontSize = this.game.world.height / 25;
+      var baseY = this.titleImage.height + this.yourScoreImage.height +
+        this.scoreText.height + this.padding * 10;
+      var xOffset = -this.padding * 2;
 
+      // Add label
+      this.highscoreListLabel = new Phaser.Text(this.game, 0, 0,
+        "High Scores", {
+          font: "" + (this.game.world.height / 17.5) + "px OmnesRoman-bold",
+          fill: "#b8f4bc",
+          align: "right",
+        });
+      this.highscoreListLabel.anchor.setTo(0.5, 0);
+      this.highscoreListLabel.reset(this.centerStageX(this.highscoreListLabel), baseY);
+      this.highscoreListGroup.add(this.highscoreListLabel);
+
+      // New base height
+      baseY = baseY + this.highscoreListLabel.height + this.padding * 0.25;
+
+      // Add high scores
       if (this.game.pickle.highscores.length > 0) {
-        _.each(this.game.pickle.highscores.reverse().slice(0, 3), _.bind(function(h, i) {
+        _.each(this.game.pickle.highscores.reverse().slice(0, this.highscoreLimit),
+          _.bind(function(h, i) {
           // Name
           var name = new Phaser.Text(
             this.game,
-            this.game.width / 2 + (this.padding * 3),
-            (this.game.height * 0.6) + ((fontSize + this.padding) * i),
+            this.game.width / 2 - this.padding + xOffset,
+            baseY + ((fontSize + this.padding / 2) * i),
             h.name, {
-              font: "bold " + (this.game.world.height / 15) + "px Dosis",
+              font: "" + fontSize + "px OmnesRoman",
               fill: "#b8f4bc",
               align: "right",
             });
@@ -308,20 +326,18 @@
           // Score
           var score = new Phaser.Text(
             this.game,
-            this.game.width / 2 + (this.padding * 5),
-            (this.game.height * 0.6) + ((fontSize + this.padding) * i),
+            this.game.width / 2 + this.padding + xOffset,
+            baseY + ((fontSize + this.padding / 2) * i),
             h.score.toLocaleString(), {
-              font: "bold " + (this.game.world.height / 15) + "px Dosis",
-              fill: "#39b54a",
+              font: "" + fontSize + "px OmnesRoman",
+              fill: "#b8f4bc",
               align: "left",
             });
           score.anchor.setTo(0, 0);
 
-          // Font loading thing
-          _.delay(_.bind(function() {
-            this.highscoreListGroup.add(name);
-            this.highscoreListGroup.add(score);
-          }, this), 1000);
+          // Add to groups
+          this.highscoreListGroup.add(name);
+          this.highscoreListGroup.add(score);
         }, this));
       }
     },

@@ -1,4 +1,4 @@
-/* global _:false, $:false, Phaser:false */
+/* global _:false, $:false, Phaser:false, WebFont:false */
 
 /**
  * Main JS for Pickle Jumper
@@ -26,8 +26,10 @@
     this.width = this.$el.width();
     this.height = $(window).height();
 
-    // Start
-    this.start();
+    // Start (load fonts first)
+    this.fonts = ["Marketing", "OmnesRoman", "OmnesRoman-bold", "OmnesRoman-900"];
+    this.fontUrls = ["dist/pickle-jumper.css"];
+    this.loadFonts(this.start);
   };
 
   // Add properties
@@ -51,8 +53,11 @@
       this.game.state.add("gameover", states.Gameover);
 
       // Highscore
-      this.highscoreLimit = 10;
+      this.highscoreLimit = this.options.highscoreLimit || 10;
       this.getHighscores();
+
+      // Allow for score reset with keyboard
+      this.handleReset();
 
       // Start with menu
       this.game.state.start("menu");
@@ -64,14 +69,33 @@
       }
     },
 
+    // Load fonts.  URLS is relative to HTML, not JS
+    loadFonts: function(done) {
+      done = _.bind(done, this);
+
+      WebFont.load({
+        custom: {
+          families: this.fonts
+        },
+        urls: this.fontUrls,
+        classes: false,
+        active: done
+      });
+    },
+
     // Hide overlay parts
     hideOverlay: function(selector) {
       $(this.options.parentEl).find(selector).hide();
     },
 
     // Show overlay parts
-    showOverlay: function(selector) {
-      $(this.options.parentEl).find(selector).show();
+    showOverlay: function(selector, time) {
+      if (time) {
+        $(this.options.parentEl).find(selector).fadeIn("fast").delay(time).fadeOut("fast");
+      }
+      else {
+        $(this.options.parentEl).find(selector).show();
+      }
     },
 
     // Get high scores
@@ -135,15 +159,32 @@
 
     // Reset highschores
     resetHighscores: function() {
+      this.highscores = [];
       window.localStorage.removeItem("highscores");
+    },
+
+    // Key combo reset
+    handleReset: function() {
+      $(window).on("keyup", _.bind(function(e) {
+        // Ctrl + J
+        if (e.ctrlKey && (e.which === 74)) {
+          this.resetHighscores();
+
+          // Show message
+          this.showOverlay(".high-reset", 1000);
+        }
+      }, this));
     }
   });
 
   // Create app
-  var p;
-  p = new Pickle({
-    el: "#pickle-jumper",
-    parentEl: ".game-wrapper",
-    debug: false
+  $(document).ready(function() {
+    var p;
+    p = new Pickle({
+      el: "#pickle-jumper",
+      parentEl: ".game-wrapper",
+      highscoreLimit: 4,
+      debug: false
+    });
   });
 })();

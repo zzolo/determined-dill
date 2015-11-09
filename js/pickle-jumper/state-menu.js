@@ -66,11 +66,14 @@
       this.actionButton.onDown.add(function() {
         this.go();
       }, this);
+
+      // Show any overlays
+      this.game.pickle.showOverlay(".state-menu");
     },
 
     // Start playing
     go: function() {
-      this.game.pickle.hideOverlay(".credits");
+      this.game.pickle.hideOverlay(".state-menu");
       this.game.state.start("play");
     },
 

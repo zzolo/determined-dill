@@ -370,27 +370,33 @@
         this.scoreGroup = this.game.add.group();
 
         // Score label
+        /*
         this.scoreLabelImage = this.game.add.sprite(
           this.padding,
           this.padding * 0.85, "game-sprites", "your-score.png");
         this.scoreLabelImage.anchor.setTo(0, 0);
-        this.scoreLabelImage.scale.setTo((this.game.width / 6) / this.scoreLabelImage.width);
+        this.scoreLabelImage.scale.setTo((this.game.width / 5) / this.scoreLabelImage.width);
         this.scoreGroup.add(this.scoreLabelImage);
+        */
 
         // Score text
-        this.scoreText = this.game.add.text(
-          this.scoreLabelImage.width + (this.padding * 2),
-          this.padding * 0.25,
+        this.scoreText = new Phaser.Text(this.game, this.padding, 0,
           this.score.toLocaleString(), {
-            font: "bold " + (this.game.world.height / 40) + "px Dosis",
+            font: "" + (this.game.world.height / 30) + "px OmnesRoman-bold",
             fill: "#39b54a",
             align: "left",
           });
         this.scoreText.anchor.setTo(0, 0);
-        this.scoreGroup.add(this.scoreText);
+        this.scoreText.setShadow(1, 1, "rgba(0, 0, 0, 0.3)", 2);
 
+        // Fix score to top
         this.scoreGroup.fixedToCamera = true;
         this.scoreGroup.cameraOffset.setTo(this.padding, this.padding);
+
+        // Hack around font-loading issues
+        _.delay(_.bind(function() {
+          this.scoreGroup.add(this.scoreText);
+        }, this), 1000);
       }
       else {
         this.scoreText.text = this.score.toLocaleString();
