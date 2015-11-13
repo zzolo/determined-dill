@@ -247,11 +247,11 @@
       carrot = this.carrots.getFirstDead();
       bean = this.beans.getFirstDead();
       if (carrot && bean) {
-        if (Math.random() < this.carrotChance) {
-          this.placePlatform(carrot, highest);
+        if (this.chance("platforms") === "carrot") {
+          this.placePlatform(carrot, highest, undefined, "carrot");
         }
         else {
-          this.placePlatform(bean, highest);
+          this.placePlatform(bean, highest, undefined, "bean");
         }
       }
     },
@@ -347,29 +347,33 @@
       platform.reset(x, y);
 
       // Add some fluff
-      this.fluffPlatform(platform);
+      this.fluffPlatform(platform, platformType);
     },
 
     // Add possible fluff to platform
-    fluffPlatform: function(platform) {
+    fluffPlatform: function(platform, platformType) {
       var x = platform.x;
       var y = platform.y - platform.height / 2 - 30;
+      var itemChance = this.chance(platformType + "Items");
 
-      // Add fluff
-      if (Math.random() <= this.hoverChance) {
+      // Hover.  Don't Add items
+      if (this.chance("hover") === "hover") {
         platform.hover = true;
+        return;
       }
-      else if (Math.random() <= this.miniChance) {
+
+      // Items
+      if (itemChance === "mini") {
         this.addWithPool(this.minis, "Mini", x, y);
       }
-      else if (Math.random() <= this.dillChance) {
+      else if (itemChance === "dill") {
         this.addWithPool(this.dills, "Dill", x, y);
       }
-      else if (Math.random() <= this.botChance) {
-        this.addWithPool(this.bots, "Botulism", x, y);
-      }
-      else if (Math.random() <= this.pepperChance) {
+      else if (itemChance === "pepper") {
         this.addWithPool(this.peppers, "Pepper", x, y);
+      }
+      else if (itemChance === "bot") {
+        this.addWithPool(this.bots, "Botulism", x, y);
       }
     },
 
@@ -400,16 +404,6 @@
       // Score text
       if (!this.scoreGroup) {
         this.scoreGroup = this.game.add.group();
-
-        // Score label
-        /*
-        this.scoreLabelImage = this.game.add.sprite(
-          this.padding,
-          this.padding * 0.85, "game-sprites", "your-score.png");
-        this.scoreLabelImage.anchor.setTo(0, 0);
-        this.scoreLabelImage.scale.setTo((this.game.width / 5) / this.scoreLabelImage.width);
-        this.scoreGroup.add(this.scoreLabelImage);
-        */
 
         // Score text
         this.scoreText = new Phaser.Text(this.game, this.padding, 0,
@@ -459,59 +453,245 @@
       return false;
     },
 
+    // Initial/base difficulty.  Chance is propbablity.  Each set is additive
+    // so it does not have to add to 1, but it's easier to think in this
+    // way.
+    chances: {
+      platforms: [
+        ["carrot", 0],
+        ["bean", 1]
+      ],
+      hover: [
+        ["none", 1],
+        ["hover", 0]
+      ],
+      carrotItems: [
+        ["none", 1],
+        ["mini", 0],
+        ["dill", 0],
+        ["pepper", 0],
+        ["bot", 0]
+      ],
+      beanItems: [
+        ["none", 1],
+        ["mini", 0],
+        ["dill", 0],
+        ["pepper", 0],
+        ["bot", 0]
+      ]
+    },
+
+    // Levels.  Level id, amount up
+    levels: [
+      [0, -100],
+      [1, -20000],
+      [2, -40000],
+      [3, -60000],
+      [4, -80000]
+    ],
+
+    // Current level
+    currentLevel: 0,
+
     // Determine difficulty
     updateDifficulty: function() {
-      // Initial state
-      this.platformSpaceY = 110;
-      this.platformGapMax = 200;
-      this.hoverChance = 0.1;
-      this.miniChance = 0.3;
-      this.dillChance = 0.3;
-      this.botChance = 0;
-      this.pepperChance = 0.1;
-      this.carrotChance = 0.1;
+      var chances;
 
-      // Set initial background
-      this.game.stage.backgroundColor = "#937D6F";
+      // Calculate level
+      this.currentLevel = _.find(this.levels, _.bind(function(l) {
+        return (l[0] === 0 && !this.cameraYMin) || (this.cameraYMin > l[1]);
+      }, this))[0];
 
-      // Initila physics time
-      //this.game.time.slowMotion = 1;
-
-      // First level
-      if (!this.cameraYMin || this.cameraYMin > -20000) {
-        // Default
+      // Determine if we need to update level
+      if (!_.isUndefined(this.previousLevel) && this.previousLevel === this.currentLevel) {
         return;
       }
 
+      // Other difficult settings
+      this.platformSpaceY = 110;
+      this.platformGapMax = 200;
+
+      // Set initial background
+      this.game.stage.backgroundColor = "#bedfb6";
+
+      // Zero level (initial screen)
+      if (this.currentLevel === 0) {
+        // Default
+        chances = _.extend({}, this.chances);
+      }
+
+      // First level
+      else if (this.currentLevel === 1) {
+        chances = {
+          platforms: [
+            ["carrot", 0],
+            ["bean", 1]
+          ],
+          hover: [
+            ["none", 9],
+            ["hover", 1]
+          ],
+          beanItems: [
+            ["none", 5],
+            ["mini", 1],
+            ["dill", 1],
+            ["pepper", 0],
+            ["bot", 0]
+          ],
+          carrotItems: [
+            ["none", 1],
+            ["mini", 0],
+            ["dill", 0],
+            ["pepper", 0],
+            ["bot", 0]
+          ]
+        };
+      }
+
       // Second level
-      else if (this.cameraYMin > -40000) {
-        this.hoverChance = 0.3;
-        this.miniChance = 0.3;
-        this.dillChance = 0.4;
-        this.botChance = 0.2;
-        this.carrotChance = 0.2;
-        this.game.stage.backgroundColor = "#BDDEB6";
+      else if (this.currentLevel === 2) {
+        this.game.stage.backgroundColor = "#88d1d0";
+
+        chances = {
+          platforms: [
+            ["carrot", 2],
+            ["bean", 8]
+          ],
+          hover: [
+            ["none", 9],
+            ["hover", 1]
+          ],
+          carrotItems: [
+            ["none", 7],
+            ["mini", 2],
+            ["dill", 1],
+            ["pepper", 1],
+            ["bot", 0]
+          ],
+          beanItems: [
+            ["none", 6],
+            ["mini", 1],
+            ["dill", 1],
+            ["pepper", 1],
+            ["bot", 1]
+          ]
+        };
       }
 
       // Third level
-      else if (this.cameraYMin > -60000) {
-        this.hoverChance = 0.4;
-        this.miniChance = 0.2;
-        this.dillChance = 0.4;
-        this.botChance = 0.3;
-        this.carrotChance = 0.3;
-        this.game.stage.backgroundColor = "#B1E0EC";
+      else if (this.currentLevel === 3) {
+        this.game.stage.backgroundColor = "#59acc6";
+
+        chances = {
+          platforms: [
+            ["carrot", 4],
+            ["bean", 6]
+          ],
+          hover: [
+            ["none", 9],
+            ["hover", 1.5]
+          ],
+          carrotItems: [
+            ["none", 5],
+            ["mini", 1],
+            ["dill", 2],
+            ["pepper", 1.2],
+            ["bot", 1.2]
+          ],
+          beanItems: [
+            ["none", 5],
+            ["mini", 1],
+            ["dill", 2],
+            ["pepper", 1.2],
+            ["bot", 1.2]
+          ]
+        };
       }
 
       // Fourth level
       else {
         this.bgGroup.visible = true;
-        this.hoverChance = 0.4;
-        this.miniChance = 0.2;
-        this.dillChance = 0.4;
-        this.botChance = 0.3;
-        this.carrotChance = 0.4;
+
+        chances = {
+          platforms: [
+            ["carrot", 8],
+            ["bean", 2]
+          ],
+          hover: [
+            ["none", 9],
+            ["hover", 1]
+          ],
+          carrotItems: [
+            ["none", 3],
+            ["mini", 1],
+            ["dill", 2],
+            ["pepper", 0.5],
+            ["bot", 3]
+          ],
+          beanItems: [
+            ["none", 3],
+            ["mini", 1],
+            ["dill", 2],
+            ["pepper", 0.5],
+            ["bot", 3]
+          ]
+        };
       }
+
+      // Make chance function
+      this.generateChance(chances);
+
+      // Keep track of level to see if it changes
+      this.previousLevel = this.currentLevel;
+    },
+
+    // Generate chance function
+    generateChance: function(chances) {
+      // Add up sets
+      var sets = {};
+      _.each(chances, function(set, si) {
+        // Get total
+        var total = _.reduce(set, function(total, chance) {
+          return total + chance[1];
+        }, 0);
+
+        // Create new array with min and max
+        var items = [];
+        _.reduce(set, function(total, chance) {
+          items.push({
+            min: total,
+            max: total + chance[1],
+            val: chance[0]
+          });
+
+          return total + chance[1];
+        }, 0);
+
+        sets[si] = {
+          total: total,
+          random: function() {
+            return Math.random() * total;
+          },
+
+          items: items
+        };
+      });
+
+      // Make function
+      this.chance = function(set) {
+        var c = sets[set].random();
+        var f = _.find(sets[set].items, function(i) {
+          return (c >= i.min && c < i.max);
+        });
+
+        return f.val;
+      };
+
+      /*
+      _.each(_.range(100), _.bind(function() {
+        console.log(this.chance("beanItems"));
+      }, this));
+      */
     },
 
     // Create super level gradient
