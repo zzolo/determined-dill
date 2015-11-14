@@ -105,7 +105,7 @@
     },
 
     // Murder with botchy
-    botchyMuder: function() {
+    botchyMurder: function() {
       this.isDead = true;
       this.loadTexture("pickle-sprites", "pickle-botchy.png");
 

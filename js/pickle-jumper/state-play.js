@@ -189,7 +189,7 @@
             hero.body.velocity.y = this.game.physics.arcade.gravity.y * -1 * 0.5;
           }
           else {
-            hero.botchyMuder();
+            hero.botchyMurder();
             bot.murder();
           }
         }, null, this);
@@ -485,9 +485,10 @@
     levels: [
       [0, -100],
       [1, -20000],
-      [2, -40000],
-      [3, -60000],
-      [4, -80000]
+      [2, -45000],
+      [3, -80000],
+      [4, -120000],
+      [5, -999999]
     ],
 
     // Current level
@@ -500,7 +501,9 @@
       // Calculate level
       this.currentLevel = _.find(this.levels, _.bind(function(l) {
         return (l[0] === 0 && !this.cameraYMin) || (this.cameraYMin > l[1]);
-      }, this))[0];
+      }, this));
+
+      this.currentLevel = this.currentLevel ? this.currentLevel[0] : this.levels[this.levels.length - 1][0];
 
       // Determine if we need to update level
       if (!_.isUndefined(this.previousLevel) && this.previousLevel === this.currentLevel) {
@@ -563,17 +566,17 @@
           ],
           carrotItems: [
             ["none", 8],
-            ["mini", 2],
+            ["mini", 2.5],
             ["dill", 2],
             ["pepper", 1],
-            ["bot", 1]
+            ["bot", 1.5]
           ],
           beanItems: [
             ["none", 8],
-            ["mini", 2],
+            ["mini", 2.5],
             ["dill", 2],
             ["pepper", 1],
-            ["bot", 1]
+            ["bot", 1.5]
           ]
         };
       }
@@ -609,7 +612,7 @@
       }
 
       // Fourth level
-      else {
+      else if (this.currentLevel === 4) {
         this.bgGroup.visible = true;
 
         chances = {
@@ -634,6 +637,37 @@
             ["dill", 2],
             ["pepper", 0.5],
             ["bot", 3]
+          ]
+        };
+      }
+
+      // Fourth level
+      else {
+        this.bgGroup.visible = false;
+        this.game.stage.backgroundColor = "#121212";
+
+        chances = {
+          platforms: [
+            ["carrot", 30],
+            ["bean", 1]
+          ],
+          hover: [
+            ["none", 4],
+            ["hover", 1]
+          ],
+          carrotItems: [
+            ["none", 0],
+            ["mini", 0],
+            ["dill", 0],
+            ["pepper", 0],
+            ["bot", 1]
+          ],
+          beanItems: [
+            ["none", 0],
+            ["mini", 0],
+            ["dill", 0],
+            ["pepper", 0],
+            ["bot", 1]
           ]
         };
       }
