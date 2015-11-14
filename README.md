@@ -21,6 +21,9 @@ Most of the configuration and setup is taken from this [Adafruit article](https:
     * Enable SSH
     * Change Hostname
     * Enable I2C (GPIO)
+    * Currently Chromium on Raspberry Pi does not utilize the GPU for canvas.
+        * [Update GPU memory](https://github.com/raspberrypi/documentation/blob/master/configuration/config-txt.md) use depending on your version of Raspberry Pi and amount of memory.
+        * `sudo nano /boot/config.txt` and edit/add `gpu_mem`
 1. Dependencies
     * `sudo apt-get update`
     * `curl -sLS https://apt.adafruit.com/add | sudo bash`
