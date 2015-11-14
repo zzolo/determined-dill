@@ -462,8 +462,8 @@
         ["bean", 1]
       ],
       hover: [
-        ["none", 1],
-        ["hover", 0]
+        ["none", 15],
+        ["hover", 1]
       ],
       carrotItems: [
         ["none", 1],
@@ -473,9 +473,9 @@
         ["bot", 0]
       ],
       beanItems: [
-        ["none", 1],
-        ["mini", 0],
-        ["dill", 0],
+        ["none", 10],
+        ["mini", 3],
+        ["dill", 1],
         ["pepper", 0],
         ["bot", 0]
       ]
@@ -512,7 +512,7 @@
       this.platformGapMax = 200;
 
       // Set initial background
-      this.game.stage.backgroundColor = "#bedfb6";
+      this.game.stage.backgroundColor = "#b8f4bc";
 
       // Zero level (initial screen)
       if (this.currentLevel === 0) {
@@ -524,26 +524,26 @@
       else if (this.currentLevel === 1) {
         chances = {
           platforms: [
-            ["carrot", 0],
-            ["bean", 1]
+            ["carrot", 1],
+            ["bean", 15]
           ],
           hover: [
             ["none", 9],
             ["hover", 1]
           ],
           beanItems: [
-            ["none", 5],
-            ["mini", 1],
-            ["dill", 1],
-            ["pepper", 0],
-            ["bot", 0]
+            ["none", 15],
+            ["mini", 5],
+            ["dill", 5],
+            ["pepper", 1],
+            ["bot", 1]
           ],
           carrotItems: [
-            ["none", 1],
-            ["mini", 0],
-            ["dill", 0],
-            ["pepper", 0],
-            ["bot", 0]
+            ["none", 15],
+            ["mini", 5],
+            ["dill", 5],
+            ["pepper", 1],
+            ["bot", 1]
           ]
         };
       }
@@ -554,24 +554,24 @@
 
         chances = {
           platforms: [
-            ["carrot", 2],
-            ["bean", 8]
+            ["carrot", 1],
+            ["bean", 9]
           ],
           hover: [
-            ["none", 9],
+            ["none", 8],
             ["hover", 1]
           ],
           carrotItems: [
-            ["none", 7],
+            ["none", 8],
             ["mini", 2],
-            ["dill", 1],
+            ["dill", 2],
             ["pepper", 1],
-            ["bot", 0]
+            ["bot", 1]
           ],
           beanItems: [
-            ["none", 6],
-            ["mini", 1],
-            ["dill", 1],
+            ["none", 8],
+            ["mini", 2],
+            ["dill", 2],
             ["pepper", 1],
             ["bot", 1]
           ]
@@ -588,22 +588,22 @@
             ["bean", 6]
           ],
           hover: [
-            ["none", 9],
-            ["hover", 1.5]
+            ["none", 7],
+            ["hover", 1]
           ],
           carrotItems: [
-            ["none", 5],
+            ["none", 6],
             ["mini", 1],
             ["dill", 2],
-            ["pepper", 1.2],
-            ["bot", 1.2]
+            ["pepper", 0.5],
+            ["bot", 2]
           ],
           beanItems: [
-            ["none", 5],
+            ["none", 6],
             ["mini", 1],
             ["dill", 2],
-            ["pepper", 1.2],
-            ["bot", 1.2]
+            ["pepper", 0.5],
+            ["bot", 2]
           ]
         };
       }
@@ -618,7 +618,7 @@
             ["bean", 2]
           ],
           hover: [
-            ["none", 9],
+            ["none", 7],
             ["hover", 1]
           ],
           carrotItems: [
