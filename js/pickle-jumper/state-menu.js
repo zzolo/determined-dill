@@ -81,7 +81,7 @@
       // Make chase scene every few seconds
       //this.chase();
       this.chaseTimer = this.game.time.create(false);
-      this.chaseTimer.loop(10000, this.chase, this);
+      this.chaseTimer.loop(20000, this.chase, this);
       this.chaseTimer.start();
     },
 
