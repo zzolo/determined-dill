@@ -613,7 +613,11 @@
 
       // Fourth level
       else if (this.currentLevel === 4) {
-        this.bgGroup.visible = true;
+        // The super background is realy tough on non-hardware-accelarted
+        // machines
+        // this.bgGroup.visible = true;
+        this.bgGroup.visible = false;
+        this.game.stage.backgroundColor = "#000000";
 
         chances = {
           platforms: [
@@ -629,14 +633,14 @@
             ["mini", 1],
             ["dill", 2],
             ["pepper", 0.5],
-            ["bot", 3]
+            ["bot", 4]
           ],
           beanItems: [
             ["none", 3],
             ["mini", 1],
             ["dill", 2],
             ["pepper", 0.5],
-            ["bot", 3]
+            ["bot", 4]
           ]
         };
       }
@@ -644,7 +648,7 @@
       // Fourth level
       else {
         this.bgGroup.visible = false;
-        this.game.stage.backgroundColor = "#121212";
+        this.game.stage.backgroundColor = "#000000";
 
         chances = {
           platforms: [

@@ -116,7 +116,7 @@
     // Make chase scene
     // Tween to: function (properties, duration, ease, autoStart, delay, repeat, yoyo)
     chase: function() {
-      var y = this.titleImage.x + (this.titleImage.height / 2) + this.padding * 4;
+      var y = this.titleImage.x + (this.titleImage.height / 2) + this.padding * 8;
 
       // Add if needed
       if (!this.pickle || !this.pickle.alive) {
