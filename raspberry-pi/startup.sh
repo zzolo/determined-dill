@@ -23,7 +23,7 @@ sleep 5;
 # if things are exited gracefully
 # https://groups.google.com/a/chromium.org/forum/#!topic/chromium-reviews/HdvP8PttOLM
 sed -i 's/"exited_cleanly": false/"exited_cleanly": true/' \
-  ~/.config/google-chrome/Default/Preferences;
+  ~/.config/chromium/Default/Preferences;
 
 # Start chromium
-chromium --kiosk --enable-kiosk-mode --enabled --allow-file-access-from-files --disable-java --disable-restore-session-state --disable-sync --disable-translate --ignore-certificate-errors http://127.0.0.1:8080/;
+chromium --kiosk --allow-file-access-from-files --disable-java --disable-restore-session-state --disable-sync --disable-translate --ignore-certificate-errors http://127.0.0.1:8080/;
