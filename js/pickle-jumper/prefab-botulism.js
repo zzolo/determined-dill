@@ -44,11 +44,22 @@
   // Add methods
   _.extend(Botulism.prototype, {
     update: function() {
+      var rx;
+      var ry;
+
       // Do hover
       if (this.hover) {
         this.body.velocity.x = this.body.velocity.x || this.hoverSpeed;
         this.body.velocity.x = (this.x <= this.minX) ? this.hoverSpeed :
           (this.x >= this.maxX) ? -this.hoverSpeed : this.body.velocity.x;
+      }
+
+      // Shake
+      if (this.shake) {
+        rx = this.game.rnd.integerInRange(-4, 4);
+        ry = this.game.rnd.integerInRange(-2, 2);
+        this.position.x += rx;
+        this.position.y += ry;
       }
     },
 
@@ -67,7 +78,11 @@
     // Reset things
     resetPlacement: function(x, y) {
       this.reset(x, y);
-      this.body.velocity.x = 0;
+
+      if (this.body.velocity) {
+        this.body.velocity.x = 0;
+      }
+
       this.getAnchorBoundsX();
     },
 
@@ -94,6 +109,16 @@
         this.resetImage();
         this.kill();
       }, this));
+    },
+
+    // Shake
+    shakeOn: function() {
+      this.shake = true;
+    },
+
+    // Shake off
+    shakeOff: function() {
+      this.shake = false;
     }
   });
 

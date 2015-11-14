@@ -78,16 +78,23 @@
     },
 
     // Jump up
-    doJumpUp: function() {
+    doJumpUp: function(rate) {
       if (!this.onFire && !this.isDead) {
-        this.animations.play("jump-up", 15, false);
+        return this.animations.play("jump-up", rate || 15, false);
       }
     },
 
     // Jump down
-    doJumpDown: function() {
+    doJumpDown: function(rate) {
       if (!this.onFire && !this.isDead) {
-        this.animations.play("jump-down", 15, false);
+        return this.animations.play("jump-down", rate || 15, false);
+      }
+    },
+
+    // Jump up and down
+    doJump: function(rate) {
+      if (!this.onFire && !this.isDead) {
+        return this.animations.play("jump", rate || 15, false);
       }
     },
 
