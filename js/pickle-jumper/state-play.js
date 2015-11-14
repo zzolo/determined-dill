@@ -45,10 +45,10 @@
       this.updateDifficulty();
 
       // Scoring
-      this.scoreMini = 100;
+      this.scoreMini = 250;
       this.scoreDill = 500;
       this.scorePepper = 750;
-      this.scoreBot = 1000;
+      this.scoreBot = 2000;
 
       // Spacing
       this.padding = 10;
